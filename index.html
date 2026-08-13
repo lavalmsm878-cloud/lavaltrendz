@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAVAL TRENDZ | لافال تريندز — تطريز فلاحي أصيل</title>
+<meta name="description" content="شنط تطريز فلاحي أصيل بتصاميم متجددة. تصفحي، اختاري، وأتمّي طلبك عبر واتساب.">
+
+<!-- Open Graph / social share preview — بعد ما تنشري الموقع، بدّل REPLACE-WITH-YOUR-DOMAIN برابط موقعك الحقيقي -->
+<meta property="og:title" content="Laval Trendz | نتميز.... لتتألقي">
+<meta property="og:description" content="شنط تطريز فلاحي أصيل بتصاميم متجددة">
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/images/lt-logo-lockup.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F3ECDC;
+  --cream-deep:#EAE0C9;
+  --surface:#FFFDF9;
+  --ink:#2B231A;
+  --ink-soft:#7A6E5C;
+  --walnut:#4A3524;
+  --gold:#AD8434;
+  --gold-light:#E7D9B5;
+  --brick:#8A3D2C;
+  --line:#E1D5B8;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Tajawal',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Header ===== */
+header{
+  position:sticky; top:0; z-index:40;
+  background:var(--surface);
+}
+.header-top{
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:18px; padding:14px 20px 0;
+}
+.brand{display:flex; align-items:center; gap:10px;}
+.lt-badge{
+  width:44px; height:44px; border-radius:50%;
+  border:1.5px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface); flex:0 0 auto;
+}
+.lt-badge span{font-family:'Cinzel',serif; font-weight:600; font-size:16px; color:var(--gold); letter-spacing:-1px;}
+.brand-text{display:flex; flex-direction:column; line-height:1.15;}
+.brand-text .name{
+  font-family:'Cinzel',serif; font-weight:600;
+  font-size:22px; letter-spacing:2px; color:var(--walnut); text-transform:uppercase;
+}
+.brand-text .tag{font-family:'Amiri',serif; font-size:12.5px; color:var(--gold);}
+
+.header-right{display:flex; align-items:center; gap:12px;}
+.search-wrap{flex:1; max-width:280px; position:relative;}
+.search-wrap input{
+  width:100%; padding:9px 38px 9px 14px;
+  border-radius:999px; border:1px solid var(--line);
+  background:var(--cream); color:var(--ink); font-family:'Tajawal',sans-serif; font-size:14px;
+}
+.search-wrap input::placeholder{color:var(--ink-soft);}
+.search-wrap input:focus{outline:1.5px solid var(--gold);}
+.search-icon{position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--ink-soft); font-size:15px;}
+[dir="ltr"] .search-icon{right:auto; left:12px;}
+[dir="ltr"] .search-wrap input{padding:9px 14px 9px 38px;}
+
+.lang-toggle{
+  flex:0 0 auto; padding:7px 14px; border-radius:999px; border:1px solid var(--walnut);
+  background:transparent; color:var(--walnut); font-family:'Tajawal',sans-serif; font-weight:700; font-size:12.5px; cursor:pointer;
+}
+
+.hero{
+  background:#EFE1C4;
+  padding:24px 20px 20px;
+  display:flex; justify-content:center;
+}
+.hero img{
+  max-width:min(480px,90%); width:100%; height:auto; display:block;
+}
+
+.social-row{
+  max-width:1100px; margin:0 auto; padding:10px 20px 0;
+  display:flex; gap:16px; justify-content:flex-end;
+}
+.social-row a{color:var(--walnut); font-size:12.5px; text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px;}
+
+.cats-row{
+  max-width:1100px; margin:12px auto 0;
+  display:flex; gap:8px; overflow-x:auto; padding:0 20px 14px;
+  scrollbar-width:none;
+}
+.cats-row::-webkit-scrollbar{display:none;}
+.cat-pill{
+  flex:0 0 auto;
+  padding:7px 18px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--walnut);
+  font-family:'Tajawal',sans-serif; font-size:13.5px; font-weight:500;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.cat-pill.active{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#fff;
+}
+
+/* ===== Grid ===== */
+main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
+.count-line{color:var(--ink-soft); font-size:13.5px; margin:0 2px 14px;}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(200px,1fr));
+  gap:18px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.card-img{
+  aspect-ratio:4/5; width:100%; overflow:hidden; position:relative; background:var(--cream-deep);
+  cursor:zoom-in;
+}
+.card-img img{width:100%; height:100%; object-fit:cover; display:block;}
+.card-badge{
+  position:absolute; top:8px; right:8px;
+  background:var(--brick); color:#fff; font-size:10.5px; font-weight:700;
+  padding:4px 9px; border-radius:999px; letter-spacing:.3px;
+}
+[dir="ltr"] .card-badge{right:auto; left:8px;}
+.card-body{padding:12px 13px 13px; display:flex; flex-direction:column; gap:6px; flex:1;}
+.card-cat{font-size:11px; color:var(--gold); font-weight:700; letter-spacing:.4px;}
+.card-name{font-size:14.5px; font-weight:500; line-height:1.35; margin:0; min-height:38px;}
+.card-size{font-size:11.5px; color:var(--ink-soft);}
+.card-stock{font-size:11.5px; color:var(--brick); font-weight:700;}
+.card-price{font-family:'Tajawal',sans-serif; font-size:17px; font-weight:700; color:var(--walnut); margin-top:auto;}
+.add-btn{
+  margin-top:4px;
+  width:100%; padding:8px 0;
+  border-radius:9px; border:1px solid var(--walnut);
+  background:transparent; color:var(--walnut);
+  font-family:'Tajawal',sans-serif; font-weight:700; font-size:13.5px;
+  cursor:pointer; transition:.15s;
+}
+.add-btn:hover{background:var(--walnut); color:#fff;}
+.qty-row{
+  margin-top:4px; display:flex; align-items:center; justify-content:space-between;
+  background:var(--walnut); border-radius:9px; overflow:hidden;
+}
+.qty-row button{background:transparent; border:none; color:#fff; font-size:17px; width:34px; height:32px; cursor:pointer;}
+.qty-row span{color:#fff; font-weight:700; font-size:14px;}
+
+/* ===== Lightbox ===== */
+.lightbox-overlay{
+  position:fixed; inset:0; background:rgba(20,15,10,.82); z-index:80;
+  display:none; align-items:center; justify-content:center; padding:24px;
+}
+.lightbox-overlay.open{display:flex;}
+.lightbox-overlay img{max-width:min(560px,92vw); max-height:82vh; border-radius:10px; object-fit:contain;}
+.lightbox-close{
+  position:absolute; top:18px; left:18px; background:rgba(255,255,255,.15); color:#fff;
+  border:none; border-radius:50%; width:38px; height:38px; font-size:20px; cursor:pointer;
+}
+
+/* ===== Floating cart button ===== */
+.cart-fab{
+  position:fixed; left:18px; bottom:18px; z-index:50;
+  background:var(--brick); color:#fff;
+  border:none; border-radius:999px;
+  padding:13px 20px 13px 16px;
+  display:flex; align-items:center; gap:10px;
+  font-family:'Tajawal',sans-serif; font-weight:700; font-size:14.5px;
+  cursor:pointer; box-shadow:0 4px 14px rgba(43,35,26,.22);
+}
+.cart-fab .badge{
+  background:#fff; color:var(--brick);
+  border-radius:999px; min-width:22px; height:22px; padding:0 5px;
+  display:flex; align-items:center; justify-content:center; font-size:12.5px;
+}
+
+/* ===== Drawer ===== */
+.overlay{position:fixed; inset:0; background:rgba(43,35,26,.45); z-index:60; display:none;}
+.overlay.open{display:block;}
+.drawer{
+  position:fixed; top:0; bottom:0; left:0; width:min(400px,92vw);
+  background:var(--cream); z-index:61;
+  transform:translateX(-105%); transition:transform .25s ease;
+  display:flex; flex-direction:column;
+}
+[dir="ltr"] .drawer{left:auto; right:0; transform:translateX(105%);}
+.drawer.open{transform:translateX(0);}
+.drawer-head{
+  padding:18px 18px 14px; background:var(--walnut); color:#fff;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.drawer-head h2{font-family:'Tajawal',sans-serif; font-size:19px; font-weight:700; margin:0; letter-spacing:.3px;}
+.drawer-head button{background:none; border:none; color:#fff; font-size:22px; cursor:pointer;}
+.drawer-body{flex:1; overflow-y:auto; padding:14px 16px;}
+.empty-cart{color:var(--ink-soft); text-align:center; padding:60px 20px; font-size:14px;}
+.cart-item{display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--line);}
+.cart-item img{width:58px; height:58px; border-radius:8px; object-fit:cover; flex:0 0 auto;}
+.ci-info{flex:1; min-width:0;}
+.ci-name{font-size:13.5px; font-weight:500; margin:0 0 3px;}
+.ci-price{font-size:12.5px; color:var(--ink-soft);}
+.ci-controls{display:flex; align-items:center; gap:8px; margin-top:6px;}
+.ci-controls button{width:24px; height:24px; border-radius:6px; border:1px solid var(--line); background:#fff; cursor:pointer; font-size:14px; line-height:1;}
+.ci-remove{background:none; border:none; color:var(--brick); font-size:12px; cursor:pointer; text-decoration:underline;}
+.drawer-foot{padding:16px 18px; border-top:1px solid var(--line); background:var(--surface);}
+.total-row{display:flex; justify-content:space-between; font-size:15px; margin-bottom:12px;}
+.total-row b{font-family:'Tajawal',sans-serif; font-size:18px; font-weight:700; color:var(--walnut);}
+.checkout-btn{
+  width:100%; padding:13px 0; border:none; border-radius:10px;
+  background:var(--brick); color:#fff; font-family:'Tajawal',sans-serif;
+  font-weight:700; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.checkout-btn:disabled{opacity:.5; cursor:not-allowed;}
+
+/* ===== Order tag modal ===== */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(43,35,26,.55); z-index:70;
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.tag{
+  background:var(--surface); width:min(380px,100%); border-radius:6px;
+  position:relative; padding:26px 24px 22px;
+  border:2px dashed var(--gold);
+}
+.tag::before{
+  content:''; position:absolute; top:50%; right:-9px; transform:translateY(-50%);
+  width:18px; height:18px; background:var(--cream); border-radius:50%; border:2px dashed var(--gold);
+}
+.tag h3{font-family:'Tajawal',sans-serif; font-size:19px; font-weight:700; margin:0 0 4px; color:var(--walnut);}
+.tag p.sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 16px;}
+.field{margin-bottom:12px;}
+.field label{display:block; font-size:12.5px; font-weight:700; margin-bottom:5px; color:var(--ink);}
+.field input{width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--line); font-family:'Tajawal',sans-serif; font-size:14px; background:var(--cream);}
+.tag-summary{border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); padding:10px 0; margin:14px 0; font-size:12.5px; color:var(--ink-soft); max-height:110px; overflow-y:auto;}
+.tag-summary div{display:flex; justify-content:space-between; padding:2px 0;}
+.modal-actions{display:flex; gap:10px;}
+.modal-actions button{flex:1; padding:11px 0; border-radius:9px; font-family:'Tajawal',sans-serif; font-weight:700; font-size:14px; cursor:pointer;}
+.btn-cancel{background:transparent; border:1px solid var(--line); color:var(--ink-soft);}
+.btn-send{background:#25D366; border:none; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px;}
+
+footer{max-width:1100px; margin:0 auto; padding:18px 20px 30px; text-align:center;}
+footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
+
+@media (max-width:480px){
+  .header-top{flex-wrap:wrap;}
+  .search-wrap{max-width:none; order:3; flex:1 1 100%;}
+  .hero{padding:16px 14px 14px;}
+  .grid{grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px;}
+  .cart-fab{left:12px; bottom:12px; padding:11px 16px 11px 14px; font-size:13.5px;}
+  .tag{padding:22px 18px 18px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="lt-badge"><span>LT</span></div>
+      <div class="brand-text">
+        <span class="name">Laval Trendz</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="search-wrap">
+        <input id="searchInput" type="text" placeholder="دور على موديل...">
+        <span class="search-icon">⌕</span>
+      </div>
+      <button class="lang-toggle" id="langToggle">EN</button>
+    </div>
+  </div>
+  <div class="cats-row" id="catsRow"></div>
+</header>
+
+<div class="hero">
+  <img src="images/lt-logo-lockup.jpg" alt="Laval Trendz — نتميز.... لتتألقي / Crafted to make you shine">
+</div>
+
+<div class="social-row">
+  <a href="https://instagram.com/CHANGE_ME" target="_blank">Instagram</a>
+  <a href="https://facebook.com/CHANGE_ME" target="_blank">Facebook</a>
+</div>
+
+<main>
+  <p class="count-line" id="countLine"></p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p id="footerText">Laval Trendz © 2026 — نتميز.... لتتألقي</p>
+</footer>
+
+<button class="cart-fab" id="cartFab"><span id="cartFabLabel">🛍 سلتي</span> <span class="badge" id="cartBadge">0</span></button>
+
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <button class="lightbox-close" id="lightboxClose">×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">سلة المشتريات</h2>
+    <button id="closeDrawer">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span id="drawerTotalLabel">المجموع</span><b id="drawerTotal">0 د.أ</b></div>
+    <button class="checkout-btn" id="checkoutBtn"><span id="checkoutBtnText">إتمام الطلب عبر واتساب</span></button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="tag">
+    <h3 id="tagTitleText">بطاقة الطلب</h3>
+    <p class="sub" id="tagSubText">عبّي بياناتك وبنحولك على واتساب فوراً</p>
+    <div class="field">
+      <label id="nameLabelText">الاسم <span style="color:var(--brick)">*</span></label>
+      <input id="custName" type="text" placeholder="اسمك">
+    </div>
+    <div class="field">
+      <label id="phoneLabelText">رقم الجوال <span style="color:var(--brick)">*</span></label>
+      <input id="custPhone" type="tel" placeholder="07XXXXXXXX">
+    </div>
+    <div class="field">
+      <label id="cityLabelText">المدينة / المنطقة (اختياري)</label>
+      <input id="custCity" type="text" placeholder="مثال: عمّان - جبل الحسين">
+    </div>
+    <div class="field">
+      <label id="notesLabelText">ملاحظات (اختياري)</label>
+      <input id="custNotes" type="text" placeholder="مثال: المقاس المطلوب، لون معيّن...">
+    </div>
+    <p id="formError" style="display:none; color:var(--brick); font-size:12.5px; margin:-6px 0 12px;"></p>
+    <div class="tag-summary" id="tagSummary"></div>
+    <div class="total-row"><span id="tagTotalLabelText">الإجمالي</span><b id="tagTotal">0 د.أ</b></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancelModal"><span id="cancelBtnText">رجوع</span></button>
+      <button class="btn-send" id="sendWhatsapp"><span id="sendBtnText">إرسال للواتساب</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+  تتبع الزوار (اختياري) — لو بدك تركبي Google Analytics أو Meta Pixel،
+  حطي الكود هون واحذفي علامات التعليق. تحتاجي رقم القياس/البيكسل تبعك.
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+============================================================ -->
+
+<script>
+const WHATSAPP_NUMBER = "962787899933";
+
+/* =====================================================
+   مصدر المنتجات — جوجل شيت (اختياري)
+   1) اعملي "Publish to web" للشيت بصيغة CSV من جوجل شيت
+   2) الصقي رابط الـ CSV هون تحت
+   3) لو تركتيه فاضي، الموقع بيستخدم النسخة المحفوظة بالكود (FALLBACK_PRODUCTS) تلقائياً
+===================================================== */
+const GOOGLE_SHEET_CSV_URL = "";
+
+/* =====================================================
+   الفئات — key ثابت للاستخدام الداخلي، ar/en للعرض
+===================================================== */
+const CATEGORIES = [
+  {key:"all", ar:"الكل", en:"All"},
+  {key:"handbag", ar:"شنط يد تطريز", en:"Embroidered handbags"},
+  {key:"handbag_plain", ar:"شنط يد", en:"Handbags"},
+  {key:"shoulder", ar:"شنط كتف", en:"Shoulder bags"},
+  {key:"wide", ar:"شنط واسعة", en:"Tote bags"},
+  {key:"belt", ar:"أحزمة", en:"Belts"},
+  {key:"ipad_bag", ar:"شنط آيباد", en:"iPad bags"},
+  {key:"laptop_bag", ar:"شنط لابتوب", en:"Laptop bags"},
+  {key:"wallet", ar:"محافظ", en:"Wallets"},
+];
+
+/* =====================================================
+   نسخة احتياطية — تُستخدم فقط لو ما في رابط جوجل شيت
+   أو تعذّر تحميله. عمود stock: فاضي/null = كمية غير محدودة
+   دائماً معروضة، رقم = تتبع كمية، وبيختفي المنتج تلقائياً لما يوصل صفر
+===================================================== */
+const FALLBACK_PRODUCTS = [
+  {id:101,nameAr:"شنطة يد تطريز فلاحي - ليالي 1",nameEn:"Layali handbag - pattern 1",price:6,categoryKey:"handbag",img:"images/layali/layali-1.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:102,nameAr:"شنطة يد تطريز فلاحي - ليالي 2",nameEn:"Layali handbag - pattern 2",price:6,categoryKey:"handbag",img:"images/layali/layali-2.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:103,nameAr:"شنطة يد تطريز فلاحي - ليالي 3",nameEn:"Layali handbag - pattern 3",price:6,categoryKey:"handbag",img:"images/layali/layali-3.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:104,nameAr:"شنطة يد تطريز فلاحي - ليالي 4",nameEn:"Layali handbag - pattern 4",price:6,categoryKey:"handbag",img:"images/layali/layali-4.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:105,nameAr:"شنطة يد تطريز فلاحي - ليالي 5",nameEn:"Layali handbag - pattern 5",price:6,categoryKey:"handbag",img:"images/layali/layali-5.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:106,nameAr:"شنطة يد تطريز فلاحي - ليالي 6",nameEn:"Layali handbag - pattern 6",price:6,categoryKey:"handbag",img:"images/layali/layali-6.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:107,nameAr:"شنطة يد تطريز فلاحي - ليالي 7",nameEn:"Layali handbag - pattern 7",price:6,categoryKey:"handbag",img:"images/layali/layali-7.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:108,nameAr:"شنطة يد تطريز فلاحي - ليالي 8",nameEn:"Layali handbag - pattern 8",price:6,categoryKey:"handbag",img:"images/layali/layali-8.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:109,nameAr:"شنطة يد تطريز فلاحي - ليالي 9",nameEn:"Layali handbag - pattern 9",price:6,categoryKey:"handbag",img:"images/layali/layali-9.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:110,nameAr:"شنطة يد تطريز فلاحي - ليالي 10",nameEn:"Layali handbag - pattern 10",price:6,categoryKey:"handbag",img:"images/layali/layali-10.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:111,nameAr:"شنطة يد تطريز فلاحي - ليالي 11",nameEn:"Layali handbag - pattern 11",price:6,categoryKey:"handbag",img:"images/layali/layali-11.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+  {id:112,nameAr:"شنطة يد تطريز فلاحي - ليالي 12",nameEn:"Layali handbag - pattern 12",price:6,categoryKey:"handbag",img:"images/layali/layali-12.png",badge:null,sizeAr:"28×19 سم، مع محفظة صغيرة",sizeEn:"28×19 cm, with matching pouch",stock:null},
+
+  {id:201,nameAr:"شنطة يد تطريز فلاحي - أصالة 1",nameEn:"Asala handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/asala/asala-1.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:202,nameAr:"شنطة يد تطريز فلاحي - أصالة 2",nameEn:"Asala handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/asala/asala-2.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:203,nameAr:"شنطة يد تطريز فلاحي - أصالة 3",nameEn:"Asala handbag - pattern 3",price:5,categoryKey:"handbag",img:"images/asala/asala-3.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:204,nameAr:"شنطة يد تطريز فلاحي - أصالة 4",nameEn:"Asala handbag - pattern 4",price:5,categoryKey:"handbag",img:"images/asala/asala-4.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:205,nameAr:"شنطة يد تطريز فلاحي - أصالة 5",nameEn:"Asala handbag - pattern 5",price:5,categoryKey:"handbag",img:"images/asala/asala-5.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:206,nameAr:"شنطة يد تطريز فلاحي - أصالة 6",nameEn:"Asala handbag - pattern 6",price:5,categoryKey:"handbag",img:"images/asala/asala-6.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:207,nameAr:"شنطة يد تطريز فلاحي - أصالة 7",nameEn:"Asala handbag - pattern 7",price:5,categoryKey:"handbag",img:"images/asala/asala-7.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:208,nameAr:"شنطة يد تطريز فلاحي - أصالة 8",nameEn:"Asala handbag - pattern 8",price:5,categoryKey:"handbag",img:"images/asala/asala-8.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:209,nameAr:"شنطة يد تطريز فلاحي - أصالة 9",nameEn:"Asala handbag - pattern 9",price:5,categoryKey:"handbag",img:"images/asala/asala-9.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:210,nameAr:"شنطة يد تطريز فلاحي - أصالة 10",nameEn:"Asala handbag - pattern 10",price:5,categoryKey:"handbag",img:"images/asala/asala-10.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:211,nameAr:"شنطة يد تطريز فلاحي - أصالة 11",nameEn:"Asala handbag - pattern 11",price:5,categoryKey:"handbag",img:"images/asala/asala-11.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:212,nameAr:"شنطة يد تطريز فلاحي - أصالة 12",nameEn:"Asala handbag - pattern 12",price:5,categoryKey:"handbag",img:"images/asala/asala-12.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:213,nameAr:"شنطة يد تطريز فلاحي - أصالة 13",nameEn:"Asala handbag - pattern 13",price:5,categoryKey:"handbag",img:"images/asala/asala-13.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:214,nameAr:"شنطة يد تطريز فلاحي - أصالة 14",nameEn:"Asala handbag - pattern 14",price:5,categoryKey:"handbag",img:"images/asala/asala-14.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:215,nameAr:"شنطة يد تطريز فلاحي - أصالة 15",nameEn:"Asala handbag - pattern 15",price:5,categoryKey:"handbag",img:"images/asala/asala-15.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:216,nameAr:"شنطة يد تطريز فلاحي - أصالة 16",nameEn:"Asala handbag - pattern 16",price:5,categoryKey:"handbag",img:"images/asala/asala-16.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:217,nameAr:"شنطة يد تطريز فلاحي - أصالة 17",nameEn:"Asala handbag - pattern 17",price:5,categoryKey:"handbag",img:"images/asala/asala-17.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:218,nameAr:"شنطة يد تطريز فلاحي - أصالة 18",nameEn:"Asala handbag - pattern 18",price:5,categoryKey:"handbag",img:"images/asala/asala-18.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:219,nameAr:"شنطة يد تطريز فلاحي - أصالة 19",nameEn:"Asala handbag - pattern 19",price:5,categoryKey:"handbag",img:"images/asala/asala-19.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:220,nameAr:"شنطة يد تطريز فلاحي - أصالة 20",nameEn:"Asala handbag - pattern 20",price:5,categoryKey:"handbag",img:"images/asala/asala-20.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:221,nameAr:"شنطة يد تطريز فلاحي - أصالة 21",nameEn:"Asala handbag - pattern 21",price:5,categoryKey:"handbag",img:"images/asala/asala-21.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:222,nameAr:"شنطة يد تطريز فلاحي - أصالة 22",nameEn:"Asala handbag - pattern 22",price:5,categoryKey:"handbag",img:"images/asala/asala-22.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:223,nameAr:"شنطة يد تطريز فلاحي - أصالة 23",nameEn:"Asala handbag - pattern 23",price:5,categoryKey:"handbag",img:"images/asala/asala-23.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:224,nameAr:"شنطة يد تطريز فلاحي - أصالة 24",nameEn:"Asala handbag - pattern 24",price:5,categoryKey:"handbag",img:"images/asala/asala-24.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:225,nameAr:"شنطة يد تطريز فلاحي - أصالة 25",nameEn:"Asala handbag - pattern 25",price:5,categoryKey:"handbag",img:"images/asala/asala-25.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:226,nameAr:"شنطة يد تطريز فلاحي - أصالة 26",nameEn:"Asala handbag - pattern 26",price:5,categoryKey:"handbag",img:"images/asala/asala-26.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:227,nameAr:"شنطة يد تطريز فلاحي - أصالة 27",nameEn:"Asala handbag - pattern 27",price:5,categoryKey:"handbag",img:"images/asala/asala-27.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:228,nameAr:"شنطة يد تطريز فلاحي - أصالة 28",nameEn:"Asala handbag - pattern 28",price:5,categoryKey:"handbag",img:"images/asala/asala-28.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:229,nameAr:"شنطة يد تطريز فلاحي - أصالة 29",nameEn:"Asala handbag - pattern 29",price:5,categoryKey:"handbag",img:"images/asala/asala-29.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:230,nameAr:"شنطة يد تطريز فلاحي - أصالة 30",nameEn:"Asala handbag - pattern 30",price:5,categoryKey:"handbag",img:"images/asala/asala-30.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:231,nameAr:"شنطة يد تطريز فلاحي - أصالة 31",nameEn:"Asala handbag - pattern 31",price:5,categoryKey:"handbag",img:"images/asala/asala-31.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:232,nameAr:"شنطة يد تطريز فلاحي - أصالة 32",nameEn:"Asala handbag - pattern 32",price:5,categoryKey:"handbag",img:"images/asala/asala-32.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:233,nameAr:"شنطة يد تطريز فلاحي - أصالة 33",nameEn:"Asala handbag - pattern 33",price:5,categoryKey:"handbag",img:"images/asala/asala-33.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:234,nameAr:"شنطة يد تطريز فلاحي - أصالة 34",nameEn:"Asala handbag - pattern 34",price:5,categoryKey:"handbag",img:"images/asala/asala-34.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:235,nameAr:"شنطة يد تطريز فلاحي - أصالة 35",nameEn:"Asala handbag - pattern 35",price:5,categoryKey:"handbag",img:"images/asala/asala-35.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:236,nameAr:"شنطة يد تطريز فلاحي - أصالة 36",nameEn:"Asala handbag - pattern 36",price:5,categoryKey:"handbag",img:"images/asala/asala-36.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:237,nameAr:"شنطة يد تطريز فلاحي - أصالة 37",nameEn:"Asala handbag - pattern 37",price:5,categoryKey:"handbag",img:"images/asala/asala-37.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:238,nameAr:"شنطة يد تطريز فلاحي - أصالة 38",nameEn:"Asala handbag - pattern 38",price:5,categoryKey:"handbag",img:"images/asala/asala-38.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:239,nameAr:"شنطة يد تطريز فلاحي - أصالة 39",nameEn:"Asala handbag - pattern 39",price:5,categoryKey:"handbag",img:"images/asala/asala-39.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:240,nameAr:"شنطة يد تطريز فلاحي - أصالة 40",nameEn:"Asala handbag - pattern 40",price:5,categoryKey:"handbag",img:"images/asala/asala-40.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:241,nameAr:"شنطة يد تطريز فلاحي - أصالة 41",nameEn:"Asala handbag - pattern 41",price:5,categoryKey:"handbag",img:"images/asala/asala-41.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+  {id:242,nameAr:"شنطة يد تطريز فلاحي - أصالة 42",nameEn:"Asala handbag - pattern 42",price:5,categoryKey:"handbag",img:"images/asala/asala-42.png",badge:null,sizeAr:"21×15 سم",sizeEn:"21×15 cm",stock:null},
+
+  {id:301,nameAr:"دانة 1",nameEn:"Dana handbag - pattern 1",price:6,categoryKey:"handbag",img:"images/dana/dana-1.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:302,nameAr:"دانة 2",nameEn:"Dana handbag - pattern 2",price:6,categoryKey:"handbag",img:"images/dana/dana-2.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:303,nameAr:"دانة 3",nameEn:"Dana handbag - pattern 3",price:6,categoryKey:"handbag",img:"images/dana/dana-3.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:304,nameAr:"دانة 4",nameEn:"Dana handbag - pattern 4",price:6,categoryKey:"handbag",img:"images/dana/dana-4.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:305,nameAr:"دانة 5",nameEn:"Dana handbag - pattern 5",price:6,categoryKey:"handbag",img:"images/dana/dana-5.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:306,nameAr:"دانة 6",nameEn:"Dana handbag - pattern 6",price:6,categoryKey:"handbag",img:"images/dana/dana-6.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:307,nameAr:"دانة 7",nameEn:"Dana handbag - pattern 7",price:6,categoryKey:"handbag",img:"images/dana/dana-7.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:308,nameAr:"دانة 8",nameEn:"Dana handbag - pattern 8",price:6,categoryKey:"handbag",img:"images/dana/dana-8.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:309,nameAr:"دانة 9",nameEn:"Dana handbag - pattern 9",price:6,categoryKey:"handbag",img:"images/dana/dana-9.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:310,nameAr:"دانة 10",nameEn:"Dana handbag - pattern 10",price:6,categoryKey:"handbag",img:"images/dana/dana-10.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:311,nameAr:"دانة 11",nameEn:"Dana handbag - pattern 11",price:6,categoryKey:"handbag",img:"images/dana/dana-11.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:312,nameAr:"دانة 12",nameEn:"Dana handbag - pattern 12",price:6,categoryKey:"handbag",img:"images/dana/dana-12.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:313,nameAr:"دانة 13",nameEn:"Dana handbag - pattern 13",price:6,categoryKey:"handbag",img:"images/dana/dana-13.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:314,nameAr:"دانة 14",nameEn:"Dana handbag - pattern 14",price:6,categoryKey:"handbag",img:"images/dana/dana-14.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:315,nameAr:"دانة 15",nameEn:"Dana handbag - pattern 15",price:6,categoryKey:"handbag",img:"images/dana/dana-15.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:316,nameAr:"دانة 16",nameEn:"Dana handbag - pattern 16",price:6,categoryKey:"handbag",img:"images/dana/dana-16.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:317,nameAr:"دانة 17",nameEn:"Dana handbag - pattern 17",price:6,categoryKey:"handbag",img:"images/dana/dana-17.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:318,nameAr:"دانة 18",nameEn:"Dana handbag - pattern 18",price:6,categoryKey:"handbag",img:"images/dana/dana-18.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:319,nameAr:"دانة 19",nameEn:"Dana handbag - pattern 19",price:6,categoryKey:"handbag",img:"images/dana/dana-19.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:320,nameAr:"دانة 20",nameEn:"Dana handbag - pattern 20",price:6,categoryKey:"handbag",img:"images/dana/dana-20.png",badge:null,sizeAr:"25×20 سم، سحاب واحد مع حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:401,nameAr:"شمس البلاد 1",nameEn:"Shams Al-Bilad shoulder bag - pattern 1",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-1.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:402,nameAr:"شمس البلاد 2",nameEn:"Shams Al-Bilad shoulder bag - pattern 2",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-2.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:403,nameAr:"شمس البلاد 3",nameEn:"Shams Al-Bilad shoulder bag - pattern 3",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-3.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:404,nameAr:"شمس البلاد 4",nameEn:"Shams Al-Bilad shoulder bag - pattern 4",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-4.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:405,nameAr:"شمس البلاد 5",nameEn:"Shams Al-Bilad shoulder bag - pattern 5",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-5.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:406,nameAr:"شمس البلاد 6",nameEn:"Shams Al-Bilad shoulder bag - pattern 6",price:5,categoryKey:"shoulder",img:"images/shams-albilad/shams-albilad-6.png",badge:null,sizeAr:"39×39 سم، سحاب واحد واسعة",sizeEn:"39×39 cm, one zipper, spacious",stock:null},
+  {id:501,nameAr:"رفيف 1",nameEn:"Rafeef iPad bag - pattern 1",price:5,categoryKey:"ipad_bag",img:"images/rafeef/rafeef-1.png",badge:null,sizeAr:"33×23 سم، مع حزام طويل",sizeEn:"33×23 cm, with long strap",stock:null},
+  {id:502,nameAr:"رفيف 2",nameEn:"Rafeef iPad bag - pattern 2",price:5,categoryKey:"ipad_bag",img:"images/rafeef/rafeef-2.png",badge:null,sizeAr:"30×22 سم، مع حزام طويل",sizeEn:"30×22 cm, with long strap",stock:null},
+  {id:503,nameAr:"رفيف 3",nameEn:"Rafeef iPad bag - pattern 3",price:5,categoryKey:"ipad_bag",img:"images/rafeef/rafeef-3.png",badge:null,sizeAr:"27×18 سم، مع حزام طويل",sizeEn:"27×18 cm, with long strap",stock:null},
+  {id:601,nameAr:"رونق 1",nameEn:"Ronaq laptop bag - pattern 1",price:7,categoryKey:"laptop_bag",img:"images/ronaq/ronaq-1.png",badge:null,sizeAr:"40×30 سم، مع حزام طويل",sizeEn:"40×30 cm, with long strap",stock:null},
+  {id:602,nameAr:"رونق 2",nameEn:"Ronaq laptop bag - pattern 2",price:7,categoryKey:"laptop_bag",img:"images/ronaq/ronaq-2.png",badge:null,sizeAr:"40×30 سم، مع حزام طويل",sizeEn:"40×30 cm, with long strap",stock:null},
+  {id:701,nameAr:"دفء 1",nameEn:"Dafa wallet - pattern 1",price:5,categoryKey:"wallet",img:"images/dafa/dafa-1.png",badge:null,sizeAr:"مقسمة من الداخل",sizeEn:"divided inside",stock:null},
+  {id:702,nameAr:"دفء 2",nameEn:"Dafa wallet - pattern 2",price:5,categoryKey:"wallet",img:"images/dafa/dafa-2.png",badge:null,sizeAr:"مقسمة من الداخل",sizeEn:"divided inside",stock:null},
+  {id:801,nameAr:"غزال 1",nameEn:"Ghazal handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/ghazal/ghazal-1.png",badge:null,sizeAr:"25×20 سم، سحاب واحد حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:802,nameAr:"غزال 2",nameEn:"Ghazal handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/ghazal/ghazal-2.png",badge:null,sizeAr:"25×20 سم، سحاب واحد حزام طويل",sizeEn:"25×20 cm, one zipper, long strap",stock:null},
+  {id:901,nameAr:"سوسنة 1",nameEn:"Sawsana handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/sawsana/sawsana-1.png",badge:null,sizeAr:"22×16 سم، 3 سحابات",sizeEn:"22×16 cm, 3 zippers",stock:null},
+  {id:902,nameAr:"سوسنة 2",nameEn:"Sawsana handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/sawsana/sawsana-2.png",badge:null,sizeAr:"22×16 سم، 3 سحابات",sizeEn:"22×16 cm, 3 zippers",stock:null},
+  {id:1001,nameAr:"حكاية 1",nameEn:"Hikaya handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/hikaya/hikaya-1.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1002,nameAr:"حكاية 2",nameEn:"Hikaya handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/hikaya/hikaya-2.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1003,nameAr:"حكاية 3",nameEn:"Hikaya handbag - pattern 3",price:5,categoryKey:"handbag",img:"images/hikaya/hikaya-3.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1101,nameAr:"زهرة اللوز 1",nameEn:"Zahrat Al-Lawz handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/zahrat-allawz/zahrat-allawz-1.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1102,nameAr:"زهرة اللوز 2",nameEn:"Zahrat Al-Lawz handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/zahrat-allawz/zahrat-allawz-2.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1103,nameAr:"زهرة اللوز 3",nameEn:"Zahrat Al-Lawz handbag - pattern 3",price:5,categoryKey:"handbag",img:"images/zahrat-allawz/zahrat-allawz-3.png",badge:null,sizeAr:"20×15 سم، طبقتين حزام طويل",sizeEn:"20×15 cm, two layers, long strap",stock:null},
+  {id:1201,nameAr:"لطف 1",nameEn:"Lutf handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/lutf/lutf-1.png",badge:null,sizeAr:"20×15 سم، سلسال",sizeEn:"20×15 cm, chain strap",stock:null},
+  {id:1202,nameAr:"لطف 2",nameEn:"Lutf handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/lutf/lutf-2.png",badge:null,sizeAr:"20×15 سم، سلسال",sizeEn:"20×15 cm, chain strap",stock:null},
+  {id:1301,nameAr:"بيدر 1",nameEn:"Baydar shoulder bag - pattern 1",price:7,categoryKey:"shoulder",img:"images/baydar/baydar-1.png",badge:null,sizeAr:"42×30 سم، واسعة",sizeEn:"42×30 cm, spacious",stock:null},
+  {id:1302,nameAr:"بيدر 2",nameEn:"Baydar shoulder bag - pattern 2",price:7,categoryKey:"shoulder",img:"images/baydar/baydar-2.png",badge:null,sizeAr:"42×30 سم، واسعة",sizeEn:"42×30 cm, spacious",stock:null},
+  {id:1303,nameAr:"بيدر 3",nameEn:"Baydar shoulder bag - pattern 3",price:7,categoryKey:"shoulder",img:"images/baydar/baydar-3.png",badge:null,sizeAr:"42×30 سم، واسعة",sizeEn:"42×30 cm, spacious",stock:null},
+  {id:1401,nameAr:"وتر 1",nameEn:"Watar handbag - pattern 1",price:6,categoryKey:"handbag",img:"images/watar/watar-1.png",badge:null,sizeAr:"25×15 سم، مقسمة من الداخل حزام طويل",sizeEn:"25×15 cm, divided inside, long strap",stock:null},
+  {id:1402,nameAr:"وتر 2",nameEn:"Watar handbag - pattern 2",price:6,categoryKey:"handbag",img:"images/watar/watar-2.png",badge:null,sizeAr:"25×15 سم، مقسمة من الداخل حزام طويل",sizeEn:"25×15 cm, divided inside, long strap",stock:null},
+  {id:1403,nameAr:"وتر 3",nameEn:"Watar handbag - pattern 3",price:6,categoryKey:"handbag",img:"images/watar/watar-3.png",badge:null,sizeAr:"25×15 سم، مقسمة من الداخل حزام طويل",sizeEn:"25×15 cm, divided inside, long strap",stock:null},
+  {id:1501,nameAr:"نبراس 1",nameEn:"Nibras handbag - pattern 1",price:6,categoryKey:"handbag",img:"images/nibras/nibras-1.png",badge:null,sizeAr:"24×13 سم، مقسمة من الداخل حزام طويل",sizeEn:"24×13 cm, divided inside, long strap",stock:null},
+  {id:1502,nameAr:"نبراس 2",nameEn:"Nibras handbag - pattern 2",price:6,categoryKey:"handbag",img:"images/nibras/nibras-2.png",badge:null,sizeAr:"24×13 سم، مقسمة من الداخل حزام طويل",sizeEn:"24×13 cm, divided inside, long strap",stock:null},
+  {id:1601,nameAr:"أغصان 1",nameEn:"Aghsan shoulder bag - pattern 1",price:5,categoryKey:"shoulder",img:"images/aghsan/aghsan-1.png",badge:null,sizeAr:"23×23 سم، 3 سحابات",sizeEn:"23×23 cm, 3 zippers",stock:null},
+  {id:1602,nameAr:"أغصان 2",nameEn:"Aghsan shoulder bag - pattern 2",price:5,categoryKey:"shoulder",img:"images/aghsan/aghsan-2.png",badge:null,sizeAr:"23×23 سم، 3 سحابات",sizeEn:"23×23 cm, 3 zippers",stock:null},
+  {id:1603,nameAr:"أغصان 3",nameEn:"Aghsan shoulder bag - pattern 3",price:5,categoryKey:"shoulder",img:"images/aghsan/aghsan-3.png",badge:null,sizeAr:"23×23 سم، 3 سحابات",sizeEn:"23×23 cm, 3 zippers",stock:null},
+  {id:1701,nameAr:"كرمة 1",nameEn:"Karmah handbag - pattern 1",price:8,categoryKey:"handbag",img:"images/karma/karma-1.png",badge:null,sizeAr:"27×16 سم، حزام طويل",sizeEn:"27×16 cm, long strap",stock:null},
+  {id:1702,nameAr:"كرمة 2",nameEn:"Karmah handbag - pattern 2",price:8,categoryKey:"handbag",img:"images/karma/karma-2.png",badge:null,sizeAr:"27×16 سم، حزام طويل",sizeEn:"27×16 cm, long strap",stock:null},
+  {id:1703,nameAr:"كرمة 3",nameEn:"Karmah handbag - pattern 3",price:8,categoryKey:"handbag",img:"images/karma/karma-3.png",badge:null,sizeAr:"27×16 سم، حزام طويل",sizeEn:"27×16 cm, long strap",stock:null},
+  {id:1801,nameAr:"داليه 1",nameEn:"Dalya handbag - pattern 1",price:5,categoryKey:"handbag",img:"images/dalya/dalya-1.png",badge:null,sizeAr:"16×16 سم، سحاب حزام طويل",sizeEn:"16×16 cm, zipper, long strap",stock:null},
+  {id:1802,nameAr:"داليه 2",nameEn:"Dalya handbag - pattern 2",price:5,categoryKey:"handbag",img:"images/dalya/dalya-2.png",badge:null,sizeAr:"16×16 سم، سحاب حزام طويل",sizeEn:"16×16 cm, zipper, long strap",stock:null},
+  {id:1803,nameAr:"داليه 3",nameEn:"Dalya handbag - pattern 3",price:5,categoryKey:"handbag",img:"images/dalya/dalya-3.png",badge:null,sizeAr:"16×16 سم، سحاب حزام طويل",sizeEn:"16×16 cm, zipper, long strap",stock:null},
+  {id:1901,nameAr:"مروج 1",nameEn:"Muruj shoulder bag - pattern 1",price:5,categoryKey:"shoulder",img:"images/muruj/muruj-1.png",badge:null,sizeAr:"34×23 سم، سحابين واسعة مع جزدان معلق",sizeEn:"34×23 cm, two zippers, spacious, with hanging pouch",stock:null},
+  {id:1902,nameAr:"مروج 2",nameEn:"Muruj shoulder bag - pattern 2",price:5,categoryKey:"shoulder",img:"images/muruj/muruj-2.png",badge:null,sizeAr:"34×23 سم، سحابين واسعة مع جزدان معلق",sizeEn:"34×23 cm, two zippers, spacious, with hanging pouch",stock:null},
+  {id:1903,nameAr:"مروج 3",nameEn:"Muruj shoulder bag - pattern 3",price:5,categoryKey:"shoulder",img:"images/muruj/muruj-3.png",badge:null,sizeAr:"34×23 سم، سحابين واسعة مع جزدان معلق",sizeEn:"34×23 cm, two zippers, spacious, with hanging pouch",stock:null},
+];
+
+let PRODUCTS = [];
+
+/* CSV parser بسيط بيدعم الفواصل جوا نص محاط بعلامات اقتباس */
+function parseCSV(text){
+  const rows = []; let row = [], field = '', inQuotes = false;
+  for(let i=0;i<text.length;i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){ if(text[i+1] === '"'){ field += '"'; i++; } else inQuotes = false; }
+      else field += c;
+    } else {
+      if(c === '"') inQuotes = true;
+      else if(c === ','){ row.push(field); field=''; }
+      else if(c === '\n' || c === '\r'){
+        if(field.length || row.length){ row.push(field); rows.push(row); row=[]; field=''; }
+        if(c === '\r' && text[i+1] === '\n') i++;
+      } else field += c;
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+function csvToProducts(text){
+  const rows = parseCSV(text);
+  if(rows.length < 2) return [];
+  const header = rows[0].map(h=>h.trim());
+  const idx = name => header.indexOf(name);
+  const iId=idx('id'), iNameAr=idx('nameAr'), iNameEn=idx('nameEn'), iPrice=idx('price'),
+        iCat=idx('categoryKey'), iImg=idx('img'), iBadge=idx('badge'),
+        iSizeAr=idx('sizeAr'), iSizeEn=idx('sizeEn'), iStock=idx('stock');
+  const out = [];
+  for(let r=1;r<rows.length;r++){
+    const row = rows[r];
+    if(!row || row.every(c=>(c||'').trim()==='')) continue;
+    const stockRaw = iStock>-1 ? (row[iStock]||'').trim() : '';
+    out.push({
+      id: Number(row[iId]) || (r+1000),
+      nameAr: (row[iNameAr]||'').trim(),
+      nameEn: (row[iNameEn]||'').trim(),
+      price: Number(row[iPrice]) || 0,
+      categoryKey: (row[iCat]||'').trim(),
+      img: (row[iImg]||'').trim(),
+      badge: ((row[iBadge]||'').trim()) || null,
+      sizeAr: (iSizeAr>-1 && (row[iSizeAr]||'').trim()) ? row[iSizeAr].trim() : null,
+      sizeEn: (iSizeEn>-1 && (row[iSizeEn]||'').trim()) ? row[iSizeEn].trim() : null,
+      stock: stockRaw === '' ? null : Number(stockRaw),
+    });
+  }
+  return out;
+}
+
+async function loadProducts(){
+  if(!GOOGLE_SHEET_CSV_URL){ PRODUCTS = FALLBACK_PRODUCTS; return; }
+  try{
+    const sep = GOOGLE_SHEET_CSV_URL.includes('?') ? '&' : '?';
+    const res = await fetch(GOOGLE_SHEET_CSV_URL + sep + 'cachebust=' + Date.now());
+    if(!res.ok) throw new Error('fetch failed: ' + res.status);
+    const text = await res.text();
+    const parsed = csvToProducts(text);
+    PRODUCTS = parsed.length ? parsed : FALLBACK_PRODUCTS;
+  }catch(e){
+    console.warn('تعذر تحميل المنتجات من جوجل شيت، رح نعرض النسخة المحفوظة بالكود.', e);
+    PRODUCTS = FALLBACK_PRODUCTS;
+  }
+}
+
+const STR = {
+  ar:{
+    tagline:"نتميز.... لتتألقي",
+    searchPlaceholder:"دور على موديل...",
+    langBtn:"EN",
+    cartFab:"🛍 سلتي",
+    countSuffix:"موديل",
+    addBtn:"أضف للسلة",
+    removeBtn:"إزالة",
+    drawerTitle:"سلة المشتريات",
+    emptyCart:"سلتك فاضية.<br>ابدأ تصفح الموديلات وضيف اللي يعجبك.",
+    totalLabel:"المجموع",
+    checkoutBtn:"إتمام الطلب عبر واتساب",
+    tagTitle:"بطاقة الطلب",
+    tagSub:"عبّي بياناتك وبنحولك على واتساب فوراً",
+    nameLabel:'الاسم <span style="color:var(--brick)">*</span>',
+    phoneLabel:'رقم الجوال <span style="color:var(--brick)">*</span>',
+    cityLabel:"المدينة / المنطقة (اختياري)",
+    notesLabel:"ملاحظات (اختياري)",
+    formError:"فضلاً عبّي الاسم ورقم الجوال قبل الإرسال",
+    tagTotalLabel:"الإجمالي",
+    cancelBtn:"رجوع",
+    sendBtn:"إرسال للواتساب",
+    badgeNew:"جديد",
+    badgeBest:"الأكثر مبيعاً",
+    footer:"Laval Trendz © 2026 — نتميز.... لتتألقي",
+    waIntro:"مرحبا، بدي أطلب من Laval Trendz:",
+    waTotal:"الإجمالي",
+    waName:"الاسم",
+    waPhone:"رقم الجوال",
+    waCity:"المنطقة",
+    waNotes:"ملاحظات",
+  },
+  en:{
+    tagline:"Crafted to make you shine",
+    searchPlaceholder:"Search a model...",
+    langBtn:"عربي",
+    cartFab:"🛍 Cart",
+    countSuffix:"models",
+    addBtn:"Add to cart",
+    removeBtn:"Remove",
+    drawerTitle:"Your cart",
+    emptyCart:"Your cart is empty.<br>Start browsing and add what you like.",
+    totalLabel:"Total",
+    checkoutBtn:"Checkout via WhatsApp",
+    tagTitle:"Order tag",
+    tagSub:"Fill your details and we'll open WhatsApp instantly",
+    nameLabel:'Name <span style="color:var(--brick)">*</span>',
+    phoneLabel:'Phone number <span style="color:var(--brick)">*</span>',
+    cityLabel:"City / area (optional)",
+    notesLabel:"Notes (optional)",
+    formError:"Please fill in your name and phone number first",
+    tagTotalLabel:"Total",
+    cancelBtn:"Back",
+    sendBtn:"Send on WhatsApp",
+    badgeNew:"New",
+    badgeBest:"Best seller",
+    footer:"Laval Trendz © 2026 — Crafted to make you shine",
+    waIntro:"Hi, I'd like to order from Laval Trendz:",
+    waTotal:"Total",
+    waName:"Name",
+    waPhone:"Phone",
+    waCity:"Area",
+    waNotes:"Notes",
+  }
+};
+
+let lang = "ar";
+let cart = {};
+let activeCategory = "all";
+let searchTerm = "";
+
+function t(){ return STR[lang]; }
+function fmt(n){ return n.toLocaleString('en-US') + (lang==='ar' ? " د.أ" : " JOD"); }
+function catLabel(key){ const c = CATEGORIES.find(c=>c.key===key); return c ? c[lang] : key; }
+function prodName(p){ return lang==='ar' ? p.nameAr : p.nameEn; }
+
+function applyStaticText(){
+  const s = t();
+  document.getElementById('htmlRoot').lang = lang;
+  document.getElementById('htmlRoot').dir = lang==='ar' ? 'rtl' : 'ltr';
+  document.getElementById('searchInput').placeholder = s.searchPlaceholder;
+  document.getElementById('langToggle').textContent = s.langBtn;
+  document.getElementById('cartFabLabel').textContent = s.cartFab;
+  document.getElementById('drawerTitle').textContent = s.drawerTitle;
+  document.getElementById('drawerTotalLabel').textContent = s.totalLabel;
+  document.getElementById('checkoutBtnText').textContent = s.checkoutBtn;
+  document.getElementById('tagTitleText').textContent = s.tagTitle;
+  document.getElementById('tagSubText').textContent = s.tagSub;
+  document.getElementById('nameLabelText').innerHTML = s.nameLabel;
+  document.getElementById('phoneLabelText').innerHTML = s.phoneLabel;
+  document.getElementById('cityLabelText').textContent = s.cityLabel;
+  document.getElementById('notesLabelText').textContent = s.notesLabel;
+  document.getElementById('tagTotalLabelText').textContent = s.tagTotalLabel;
+  document.getElementById('cancelBtnText').textContent = s.cancelBtn;
+  document.getElementById('sendBtnText').textContent = s.sendBtn;
+  document.getElementById('footerText').textContent = s.footer;
+}
+
+document.getElementById('langToggle').addEventListener('click', ()=>{
+  lang = lang==='ar' ? 'en' : 'ar';
+  applyStaticText();
+  renderCats();
+  renderGrid();
+  renderDrawer();
+});
+
+function renderCats(){
+  const row = document.getElementById('catsRow');
+  row.innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-pill ${c.key===activeCategory?'active':''}" data-cat="${c.key}">${c[lang]}</button>`
+  ).join('');
+  row.querySelectorAll('.cat-pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ activeCategory = btn.dataset.cat; renderCats(); renderGrid(); });
+  });
+}
+
+function filteredProducts(){
+  return PRODUCTS.filter(p=>{
+    const matchesCat = activeCategory==="all" || p.categoryKey===activeCategory;
+    const matchesSearch = prodName(p).includes(searchTerm.trim());
+    const inStock = (p.stock === null || p.stock === undefined) || p.stock > 0;
+    return matchesCat && matchesSearch && inStock;
+  });
+}
+
+function badgeLabel(b){
+  if(b==='new') return t().badgeNew;
+  if(b==='best') return t().badgeBest;
+  return '';
+}
+
+function renderGrid(){
+  const list = filteredProducts();
+  document.getElementById('countLine').textContent = `${list.length} ${t().countSuffix}`;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = list.map(p=>{
+    const qty = cart[p.id]?.qty || 0;
+    return `
+    <div class="card">
+      <div class="card-img" data-img="${p.img}" data-name="${prodName(p)}">
+        <img src="${p.img}" alt="${prodName(p)}" loading="lazy">
+        ${p.badge ? `<span class="card-badge">${badgeLabel(p.badge)}</span>` : ''}
+      </div>
+      <div class="card-body">
+        <span class="card-cat">${catLabel(p.categoryKey)}</span>
+        <p class="card-name">${prodName(p)}</p>
+        ${(lang==='ar' ? p.sizeAr : p.sizeEn) ? `<span class="card-size">${lang==='ar' ? p.sizeAr : p.sizeEn}</span>` : ''}
+        ${(p.stock !== null && p.stock !== undefined && p.stock <= 3) ? `<span class="card-stock">${lang==='ar' ? 'باقي '+p.stock+' قطع فقط' : 'Only '+p.stock+' left'}</span>` : ''}
+        <span class="card-price">${fmt(p.price)}</span>
+        ${qty===0
+          ? `<button class="add-btn" data-id="${p.id}">${t().addBtn}</button>`
+          : `<div class="qty-row">
+               <button data-id="${p.id}" data-act="minus">−</button>
+               <span>${qty}</span>
+               <button data-id="${p.id}" data-act="plus">+</button>
+             </div>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.add-btn').forEach(b=>{
+    b.addEventListener('click', ()=> changeQty(Number(b.dataset.id), 1));
+  });
+  grid.querySelectorAll('.qty-row button').forEach(b=>{
+    b.addEventListener('click', ()=> changeQty(Number(b.dataset.id), b.dataset.act==='plus'?1:-1));
+  });
+  grid.querySelectorAll('.card-img').forEach(el=>{
+    el.addEventListener('click', ()=> openLightbox(el.dataset.img, el.dataset.name));
+  });
+}
+
+function changeQty(id, delta){
+  const product = PRODUCTS.find(p=>p.id===id);
+  if(!cart[id]) cart[id] = {product, qty:0};
+  cart[id].qty += delta;
+  if(cart[id].qty<=0) delete cart[id];
+  renderGrid();
+  renderCartBadge();
+  renderDrawer();
+}
+
+function cartCount(){ return Object.values(cart).reduce((s,i)=>s+i.qty,0); }
+function cartTotal(){ return Object.values(cart).reduce((s,i)=>s+i.qty*i.product.price,0); }
+
+function renderCartBadge(){
+  document.getElementById('cartBadge').textContent = cartCount();
+}
+
+function renderDrawer(){
+  const body = document.getElementById('drawerBody');
+  const items = Object.values(cart);
+  if(items.length===0){
+    body.innerHTML = `<p class="empty-cart">${t().emptyCart}</p>`;
+  } else {
+    body.innerHTML = items.map(i=>`
+      <div class="cart-item">
+        <img src="${i.product.img}" alt="">
+        <div class="ci-info">
+          <p class="ci-name">${prodName(i.product)}</p>
+          <span class="ci-price">${fmt(i.product.price)}</span>
+          <div class="ci-controls">
+            <button data-id="${i.product.id}" data-act="minus">−</button>
+            <span>${i.qty}</span>
+            <button data-id="${i.product.id}" data-act="plus">+</button>
+            <button class="ci-remove" data-id="${i.product.id}" data-act="remove">${t().removeBtn}</button>
+          </div>
+        </div>
+      </div>`).join('');
+    body.querySelectorAll('button[data-act]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const id = Number(b.dataset.id);
+        if(b.dataset.act==='remove'){ delete cart[id]; renderGrid(); renderCartBadge(); renderDrawer(); }
+        else changeQty(id, b.dataset.act==='plus'?1:-1);
+      });
+    });
+  }
+  document.getElementById('drawerTotal').textContent = fmt(cartTotal());
+  document.getElementById('checkoutBtn').disabled = items.length===0;
+}
+
+/* Drawer open/close */
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('drawer');
+function openDrawer(){ overlay.classList.add('open'); drawer.classList.add('open'); }
+function closeDrawer(){ overlay.classList.remove('open'); drawer.classList.remove('open'); }
+document.getElementById('cartFab').addEventListener('click', openDrawer);
+document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+
+/* Lightbox */
+const lightboxOverlay = document.getElementById('lightboxOverlay');
+const lightboxImg = document.getElementById('lightboxImg');
+function openLightbox(src, alt){
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+  lightboxOverlay.classList.add('open');
+}
+document.getElementById('lightboxClose').addEventListener('click', ()=> lightboxOverlay.classList.remove('open'));
+lightboxOverlay.addEventListener('click', (e)=>{ if(e.target===lightboxOverlay) lightboxOverlay.classList.remove('open'); });
+
+/* Search */
+document.getElementById('searchInput').addEventListener('input', (e)=>{
+  searchTerm = e.target.value;
+  renderGrid();
+});
+
+/* ===== Order tag modal + WhatsApp handoff ===== */
+const modalOverlay = document.getElementById('modalOverlay');
+
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if(cartCount()===0) return;
+  document.getElementById('tagSummary').innerHTML = Object.values(cart).map(i=>
+    `<div><span>${prodName(i.product)} × ${i.qty}</span><span>${fmt(i.product.price*i.qty)}</span></div>`
+  ).join('');
+  document.getElementById('tagTotal').textContent = fmt(cartTotal());
+  modalOverlay.classList.add('open');
+});
+
+document.getElementById('cancelModal').addEventListener('click', ()=>{
+  modalOverlay.classList.remove('open');
+});
+
+document.getElementById('sendWhatsapp').addEventListener('click', ()=>{
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const city = document.getElementById('custCity').value.trim();
+  const notes = document.getElementById('custNotes').value.trim();
+  const errorMsg = document.getElementById('formError');
+  const s = t();
+
+  if(!name || !phone){
+    errorMsg.textContent = s.formError;
+    errorMsg.style.display = 'block';
+    return;
+  }
+  errorMsg.style.display = 'none';
+
+  let msg = `${s.waIntro}\n\n`;
+  Object.values(cart).forEach(i=>{
+    msg += `• ${prodName(i.product)} × ${i.qty} — ${fmt(i.product.price*i.qty)}\n`;
+  });
+  msg += `\n${s.waTotal}: ${fmt(cartTotal())}`;
+  msg += `\n${s.waName}: ${name}`;
+  msg += `\n${s.waPhone}: ${phone}`;
+  if(city) msg += `\n${s.waCity}: ${city}`;
+  if(notes) msg += `\n${s.waNotes}: ${notes}`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+});
+
+/* Init */
+async function init(){
+  applyStaticText();
+  document.getElementById('countLine').textContent = lang==='ar' ? 'جاري تحميل المنتجات...' : 'Loading products...';
+  await loadProducts();
+  renderCats();
+  renderGrid();
+  renderCartBadge();
+  renderDrawer();
+}
+init();
+</script>
+</body>
+</html>
