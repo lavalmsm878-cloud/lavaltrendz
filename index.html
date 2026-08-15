@@ -56,8 +56,9 @@ header{
   border:1.5px solid var(--gold);
   display:flex; align-items:center; justify-content:center;
   background:var(--surface); flex:0 0 auto;
+  overflow:hidden;
 }
-.lt-badge span{font-family:'Cinzel',serif; font-weight:600; font-size:16px; color:var(--gold); letter-spacing:-1px;}
+.lt-badge img{width:100%; height:100%; object-fit:cover; transform:scale(1.7);}
 .brand-text{display:flex; flex-direction:column; line-height:1.15;}
 .brand-text .name{
   font-family:'Cinzel',serif; font-weight:600;
@@ -84,16 +85,18 @@ header{
 }
 
 .hero{
-  background:#EFE1C4;
+  background-image:url('images/lt-logo-lockup.jpg');
+  background-size:cover;
+  background-position:center;
+  background-color:#EFE1C4;
+  min-height:260px;
   padding:24px 20px 20px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-}
-.hero img{
-  max-width:min(480px,90%); width:100%; height:auto; display:block;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
 }
 .brand-story{
   max-width:560px; text-align:center; margin:10px 0 0;
   font-size:13px; color:var(--walnut); line-height:1.8;
+  background:rgba(255,253,249,.82); border-radius:9px; padding:8px 14px;
 }
 
 .social-row{
@@ -245,6 +248,7 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
 .drawer-foot{padding:16px 18px; border-top:1px solid var(--line); background:var(--surface);}
 .total-row{display:flex; justify-content:space-between; font-size:15px; margin-bottom:12px;}
 .total-row b{font-family:'Tajawal',sans-serif; font-size:18px; font-weight:700; color:var(--walnut);}
+.subtotal-row{display:flex; justify-content:space-between; font-size:13px; color:var(--ink-soft); margin-bottom:6px;}
 .checkout-btn{
   width:100%; padding:13px 0; border:none; border-radius:10px;
   background:var(--brick); color:#fff; font-family:'Tajawal',sans-serif;
@@ -332,7 +336,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 @media (max-width:480px){
   .header-top{flex-wrap:wrap;}
   .search-wrap{max-width:none; order:3; flex:1 1 100%;}
-  .hero{padding:16px 14px 14px;}
+  .hero{padding:16px 14px 14px; min-height:180px;}
   .grid{grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px;}
   .cart-fab{left:12px; bottom:12px; padding:11px 16px 11px 14px; font-size:13.5px;}
   .tag{padding:22px 18px 18px;}
@@ -355,7 +359,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 <header>
   <div class="header-top">
     <div class="brand">
-      <div class="lt-badge"><span>LT</span></div>
+      <div class="lt-badge"><img src="images/lt-mark.jpg" alt="LT"></div>
       <div class="brand-text">
         <span class="name">Laval Trendz</span>
       </div>
@@ -373,8 +377,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 
 <div class="delivery-banner" id="deliveryBanner"></div>
 
-<div class="hero">
-  <img src="images/lt-logo-lockup.jpg" alt="Laval Trendz — نتميز.... لتتألقي / Crafted to make you shine">
+<div class="hero" role="img" aria-label="Laval Trendz — نتميز.... لتتألقي / Crafted to make you shine">
   <p class="brand-story" id="brandStory"></p>
 </div>
 
@@ -409,8 +412,10 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
   </div>
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-foot">
-    <p class="delivery-note" id="deliveryNoteCart"></p>
+    <div class="subtotal-row"><span id="subtotalLabelText">المجموع الفرعي</span><span id="drawerSubtotal">0 د.أ</span></div>
+    <div class="subtotal-row"><span id="deliveryFeeLabelText">التوصيل</span><span id="drawerDeliveryFee">2 د.أ</span></div>
     <div class="total-row"><span id="drawerTotalLabel">المجموع</span><b id="drawerTotal">0 د.أ</b></div>
+    <p class="delivery-note" id="deliveryNoteCart"></p>
     <button class="checkout-btn" id="checkoutBtn"><span id="checkoutBtnText">إتمام الطلب عبر واتساب</span></button>
   </div>
 </div>
@@ -437,8 +442,10 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
     </div>
     <p id="formError" style="display:none; color:var(--brick); font-size:12.5px; margin:-6px 0 12px;"></p>
     <div class="tag-summary" id="tagSummary"></div>
-    <p class="delivery-note" id="deliveryNoteTag"></p>
+    <div class="subtotal-row"><span id="subtotalLabelText2">المجموع الفرعي</span><span id="tagSubtotal">0 د.أ</span></div>
+    <div class="subtotal-row"><span id="deliveryFeeLabelText2">التوصيل</span><span id="tagDeliveryFee">2 د.أ</span></div>
     <div class="total-row"><span id="tagTotalLabelText">الإجمالي</span><b id="tagTotal">0 د.أ</b></div>
+    <p class="delivery-note" id="deliveryNoteTag"></p>
     <div class="modal-actions">
       <button class="btn-cancel" id="cancelModal"><span id="cancelBtnText">رجوع</span></button>
       <button class="btn-send" id="sendWhatsapp"><span id="sendBtnText">إرسال للواتساب</span></button>
@@ -494,6 +501,7 @@ const GATE_PASSWORD = "2480";
 
 <script>
 const WHATSAPP_NUMBER = "962787899933";
+const DELIVERY_FEE = 2;
 
 /* =====================================================
    مصدر المنتجات — جوجل شيت (اختياري)
@@ -719,13 +727,15 @@ const STR = {
     tagline:"نتميز.... لتتألقي",
     searchPlaceholder:"دور على موديل...",
     langBtn:"EN",
-    cartFab:"🛍 سلتي",
+    cartFab:"🛍 سلة السعادة",
     countSuffix:"موديل",
-    addBtn:"أضف للسلة",
+    addBtn:"أضف إلى سلة السعادة",
     removeBtn:"إزالة",
-    drawerTitle:"سلة المشتريات",
-    emptyCart:"سلتك فاضية.<br>ابدأ تصفح الموديلات وضيف اللي يعجبك.",
-    totalLabel:"المجموع",
+    drawerTitle:"سلة السعادة",
+    emptyCart:"سلة السعادة فاضية.<br>ابدأ تصفح الموديلات وضيف اللي يعجبك.",
+    totalLabel:"الإجمالي",
+    subtotalLabel:"المجموع الفرعي",
+    deliveryFeeLabel:"التوصيل",
     checkoutBtn:"إتمام الطلب عبر واتساب",
     tagTitle:"بطاقة الطلب",
     tagSub:"عبّي بياناتك وبنحولك على واتساب فوراً",
@@ -741,29 +751,31 @@ const STR = {
     badgeBest:"الأكثر مبيعاً",
     footer:"Laval Trendz © 2026 — نتميز.... لتتألقي",
     waIntro:"مرحبا، بدي أطلب من Laval Trendz:",
-    waTotal:"الإجمالي",
+    waTotal:"الإجمالي (شامل التوصيل)",
     waName:"الاسم",
     waPhone:"رقم الجوال",
     waCity:"المنطقة",
     waNotes:"ملاحظات",
     deliveryBanner:"🚚 التوصيل لجميع أنحاء المملكة بـ <b>2 دينار فقط</b>",
-    deliveryNote:"التوصيل: 2 د.أ لكل المملكة — الدفع كاش أو كليك عند الاستلام",
-    waDelivery:"التوصيل: 2 د.أ (كاش أو كليك عند الاستلام)",
-    brandStory:"تطريز فلسطيني أصيل، غرزة غرزة، بلمسة عصرية — كل قطعة من لافال تريندز مصنوعة بعناية لتحكي حكاية تراث بأناقة اليوم.",
-    addedToast:"✓ تمت الإضافة للسلة",
+    deliveryNote:"الدفع كاش أو كليك عند الاستلام",
+    waDelivery:"(شامل رسوم توصيل 2 د.أ — الدفع كاش أو كليك عند الاستلام)",
+    brandStory:"تطريز فلاحي أصيل، غرزة غرزة، بلمسة عصرية — كل قطعة من لافال تريندز مصنوعة بعناية لتحكي حكاية تراث بأناقة اليوم.",
+    addedToast:"✓ تمت الإضافة لسلة السعادة",
     emptySearch:"ما لقينا نتيجة مطابقة.<br>جربي اسم تاني أو تصفحي الفئات فوق.",
   },
   en:{
     tagline:"Crafted to make you shine",
     searchPlaceholder:"Search a model...",
     langBtn:"عربي",
-    cartFab:"🛍 Cart",
+    cartFab:"🛍 Basket of Happiness",
     countSuffix:"models",
-    addBtn:"Add to cart",
+    addBtn:"Add to Basket of Happiness",
     removeBtn:"Remove",
-    drawerTitle:"Your cart",
-    emptyCart:"Your cart is empty.<br>Start browsing and add what you like.",
+    drawerTitle:"Basket of Happiness",
+    emptyCart:"Your Basket of Happiness is empty.<br>Start browsing and add what you like.",
     totalLabel:"Total",
+    subtotalLabel:"Subtotal",
+    deliveryFeeLabel:"Delivery",
     checkoutBtn:"Checkout via WhatsApp",
     tagTitle:"Order tag",
     tagSub:"Fill your details and we'll open WhatsApp instantly",
@@ -779,16 +791,16 @@ const STR = {
     badgeBest:"Best seller",
     footer:"Laval Trendz © 2026 — Crafted to make you shine",
     waIntro:"Hi, I'd like to order from Laval Trendz:",
-    waTotal:"Total",
+    waTotal:"Total (delivery included)",
     waName:"Name",
     waPhone:"Phone",
     waCity:"Area",
     waNotes:"Notes",
     deliveryBanner:"🚚 Delivery across Jordan for only <b>2 JOD</b>",
-    deliveryNote:"Delivery: 2 JOD nationwide — Cash or Click on delivery",
-    waDelivery:"Delivery: 2 JOD (cash or click on delivery)",
+    deliveryNote:"Cash or Click on delivery",
+    waDelivery:"(includes 2 JOD delivery — cash or click on delivery)",
     brandStory:"Authentic Palestinian embroidery, stitch by stitch, with a modern touch — every Laval Trendz piece is crafted to tell a story of heritage with today's elegance.",
-    addedToast:"✓ Added to cart",
+    addedToast:"✓ Added to Basket of Happiness",
     emptySearch:"No matching results found.<br>Try another name or browse the categories above.",
   }
 };
@@ -827,6 +839,12 @@ function applyStaticText(){
   document.getElementById('deliveryNoteCart').textContent = s.deliveryNote;
   document.getElementById('deliveryNoteTag').textContent = s.deliveryNote;
   document.getElementById('brandStory').textContent = s.brandStory;
+  document.getElementById('subtotalLabelText').textContent = s.subtotalLabel;
+  document.getElementById('deliveryFeeLabelText').textContent = s.deliveryFeeLabel;
+  document.getElementById('subtotalLabelText2').textContent = s.subtotalLabel;
+  document.getElementById('deliveryFeeLabelText2').textContent = s.deliveryFeeLabel;
+  document.getElementById('drawerDeliveryFee').textContent = fmt(DELIVERY_FEE);
+  document.getElementById('tagDeliveryFee').textContent = fmt(DELIVERY_FEE);
 }
 
 document.getElementById('langToggle').addEventListener('click', ()=>{
@@ -931,6 +949,7 @@ function showToast(msg){
 
 function cartCount(){ return Object.values(cart).reduce((s,i)=>s+i.qty,0); }
 function cartTotal(){ return Object.values(cart).reduce((s,i)=>s+i.qty*i.product.price,0); }
+function grandTotal(){ return cartCount()>0 ? cartTotal() + DELIVERY_FEE : 0; }
 
 function renderCartBadge(){
   document.getElementById('cartBadge').textContent = cartCount();
@@ -964,7 +983,8 @@ function renderDrawer(){
       });
     });
   }
-  document.getElementById('drawerTotal').textContent = fmt(cartTotal());
+  document.getElementById('drawerSubtotal').textContent = fmt(cartTotal());
+  document.getElementById('drawerTotal').textContent = fmt(grandTotal());
   document.getElementById('checkoutBtn').disabled = items.length===0;
 }
 
@@ -1002,7 +1022,8 @@ document.getElementById('checkoutBtn').addEventListener('click', ()=>{
   document.getElementById('tagSummary').innerHTML = Object.values(cart).map(i=>
     `<div><span>${prodName(i.product)} × ${i.qty}</span><span>${fmt(i.product.price*i.qty)}</span></div>`
   ).join('');
-  document.getElementById('tagTotal').textContent = fmt(cartTotal());
+  document.getElementById('tagSubtotal').textContent = fmt(cartTotal());
+  document.getElementById('tagTotal').textContent = fmt(grandTotal());
   modalOverlay.classList.add('open');
 });
 
@@ -1029,7 +1050,7 @@ document.getElementById('sendWhatsapp').addEventListener('click', ()=>{
   Object.values(cart).forEach(i=>{
     msg += `• ${prodName(i.product)} × ${i.qty} — ${fmt(i.product.price*i.qty)}\n`;
   });
-  msg += `\n${s.waTotal}: ${fmt(cartTotal())}`;
+  msg += `\n${s.waTotal}: ${fmt(grandTotal())}`;
   msg += `\n${s.waDelivery}`;
   msg += `\n${s.waName}: ${name}`;
   msg += `\n${s.waPhone}: ${phone}`;
