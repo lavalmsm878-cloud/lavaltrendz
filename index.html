@@ -56,8 +56,9 @@ header{
   border:1.5px solid var(--gold);
   display:flex; align-items:center; justify-content:center;
   background:var(--surface); flex:0 0 auto;
+  overflow:hidden;
 }
-.lt-badge span{font-family:'Cinzel',serif; font-weight:700; font-size:15px; color:var(--gold); letter-spacing:-1px;}
+.lt-badge img{width:100%; height:100%; object-fit:contain; padding:4px;}
 .brand-text{display:flex; flex-direction:column; line-height:1.15;}
 .brand-text .name{
   font-family:'Cinzel',serif; font-weight:600;
@@ -84,41 +85,16 @@ header{
 }
 
 .hero{
-  background:linear-gradient(135deg, #F3ECDC 0%, #EFE1C4 50%, #F3ECDC 100%);
-  padding:38px 20px 30px;
+  background:#F0E4CE;
+  padding:22px 20px;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
-  position:relative;
-  overflow:hidden;
 }
-.hero::before, .hero::after{
-  content:''; position:absolute; top:0; bottom:0; width:14px;
-  background-image:repeating-linear-gradient(135deg, transparent 0 8px, rgba(173,132,52,.35) 8px 10px);
+.hero-logo-img{
+  width:100%; max-width:420px; height:auto; display:block; object-fit:contain;
 }
-.hero::before{left:0;}
-.hero::after{right:0;}
-.hero-lt{
-  font-family:'Cinzel',serif; font-weight:700;
-  font-size:clamp(30px, 8vw, 46px);
-  color:var(--gold);
-  line-height:1;
-  letter-spacing:-2px;
-  margin-bottom:2px;
-}
-.hero-name{
-  font-family:'Cinzel',serif; font-weight:600;
-  font-size:clamp(26px, 7vw, 44px);
-  color:var(--walnut);
-  letter-spacing:clamp(2px, 1.5vw, 8px);
-  text-transform:uppercase;
-  margin:0;
-}
-.hero-name span{color:var(--gold);}
-.hero-rule{width:70px; height:1px; background:var(--gold); margin:10px auto;}
-.hero-tagline-ar{font-family:'Amiri',serif; font-size:clamp(15px,3vw,19px); color:var(--walnut); margin:0;}
-.hero-tagline-en{font-family:'Cinzel',serif; font-size:clamp(11px,2.2vw,14px); color:var(--gold); letter-spacing:1px; margin:4px 0 0;}
 .brand-story{
-  max-width:520px; text-align:center; margin:18px 0 0;
+  max-width:520px; text-align:center; margin:16px 0 0;
   font-size:13px; color:var(--walnut); line-height:1.8;
 }
 
@@ -382,7 +358,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 <header>
   <div class="header-top">
     <div class="brand">
-      <div class="lt-badge"><span>LT</span></div>
+      <div class="lt-badge"><img src="images/lt-mark.jpg" alt="LT"></div>
       <div class="brand-text">
         <span class="name">Laval Trendz</span>
       </div>
@@ -401,11 +377,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 <div class="delivery-banner" id="deliveryBanner"></div>
 
 <div class="hero">
-  <div class="hero-lt">LT</div>
-  <h1 class="hero-name">L<span>A</span>VAL TRENDZ</h1>
-  <div class="hero-rule"></div>
-  <p class="hero-tagline-ar">نتميز.... لتتألقي</p>
-  <p class="hero-tagline-en">CRAFTED TO MAKE YOU SHINE</p>
+  <img class="hero-logo-img" src="images/lt-logo-lockup.jpg" alt="Laval Trendz — نتميز.... لتتألقي / Crafted to make you shine">
   <p class="brand-story" id="brandStory"></p>
 </div>
 
