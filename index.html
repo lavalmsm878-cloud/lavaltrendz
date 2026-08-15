@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LAVAL TRENDZ | لافال تريندز — تطريز فلاحي أصيل</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FFFDF9' stroke='%23AD8434' stroke-width='3'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%234A3524' text-anchor='middle'%3ELT%3C/text%3E%3C/svg%3E">
 <meta name="description" content="شنط تطريز فلاحي أصيل بتصاميم متجددة. تصفحي، اختاري، وأتمّي طلبك عبر واتساب.">
 
 <!-- Open Graph / social share preview — بعد ما تنشري الموقع، بدّل REPLACE-WITH-YOUR-DOMAIN برابط موقعك الحقيقي -->
@@ -85,10 +86,14 @@ header{
 .hero{
   background:#EFE1C4;
   padding:24px 20px 20px;
-  display:flex; justify-content:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
 .hero img{
   max-width:min(480px,90%); width:100%; height:auto; display:block;
+}
+.brand-story{
+  max-width:560px; text-align:center; margin:10px 0 0;
+  font-size:13px; color:var(--walnut); line-height:1.8;
 }
 
 .social-row{
@@ -96,6 +101,15 @@ header{
   display:flex; gap:16px; justify-content:flex-end;
 }
 .social-row a{color:var(--walnut); font-size:12.5px; text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px;}
+
+/* ===== Delivery banner ===== */
+.delivery-banner{
+  background:var(--walnut); color:#fff;
+  text-align:center; padding:9px 16px;
+  font-size:13px; font-weight:500;
+  display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+}
+.delivery-banner b{color:var(--gold-light); font-weight:700;}
 
 .cats-row{
   max-width:1100px; margin:12px auto 0;
@@ -134,6 +148,11 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
   border-radius:var(--radius);
   overflow:hidden;
   display:flex; flex-direction:column;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(43,35,26,.10);
 }
 .card-img{
   aspect-ratio:4/5; width:100%; overflow:hidden; position:relative; background:var(--cream-deep);
@@ -233,6 +252,21 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
 }
 .checkout-btn:disabled{opacity:.5; cursor:not-allowed;}
 
+.delivery-note{
+  background:var(--cream); border:1px dashed var(--gold);
+  border-radius:9px; padding:9px 12px; margin-bottom:12px;
+  font-size:12px; color:var(--walnut); line-height:1.7; text-align:center;
+}
+
+/* ===== Toast ===== */
+.toast{
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--walnut); color:#fff; padding:11px 22px; border-radius:999px;
+  font-size:13.5px; font-weight:600; box-shadow:0 6px 18px rgba(43,35,26,.25);
+  z-index:90; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
 /* ===== Order tag modal ===== */
 .modal-overlay{
   position:fixed; inset:0; background:rgba(43,35,26,.55); z-index:70;
@@ -263,6 +297,38 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
 footer{max-width:1100px; margin:0 auto; padding:18px 20px 30px; text-align:center;}
 footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 
+/* ===== Password gate ===== */
+#gateOverlay{
+  position:fixed; inset:0; z-index:999;
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+}
+.gate-box{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  max-width:340px; width:100%; padding:32px 28px; text-align:center;
+}
+.gate-badge{
+  width:54px; height:54px; border-radius:50%; border:1.5px solid var(--gold);
+  display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
+  background:var(--surface);
+}
+.gate-badge span{font-family:'Cinzel',serif; font-weight:600; font-size:20px; color:var(--gold);}
+.gate-box h2{font-family:'Cinzel',serif; font-size:19px; color:var(--walnut); margin:0 0 8px; letter-spacing:1px;}
+.gate-box p{font-size:13px; color:var(--ink-soft); margin:0 0 20px; line-height:1.6;}
+.gate-box input{
+  width:100%; padding:11px 14px; border-radius:9px; border:1px solid var(--line);
+  background:var(--cream); font-family:'Tajawal',sans-serif; font-size:16px; text-align:center;
+  letter-spacing:4px; margin-bottom:12px;
+}
+.gate-box input:focus{outline:1.5px solid var(--gold);}
+.gate-box button{
+  width:100%; padding:11px 0; border:none; border-radius:9px;
+  background:var(--walnut); color:#fff; font-family:'Tajawal',sans-serif; font-weight:700; font-size:14px;
+  cursor:pointer;
+}
+.gate-error{color:var(--brick); font-size:12.5px; margin-top:10px; display:none;}
+
 @media (max-width:480px){
   .header-top{flex-wrap:wrap;}
   .search-wrap{max-width:none; order:3; flex:1 1 100%;}
@@ -274,6 +340,17 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 </style>
 </head>
 <body>
+
+<div id="gateOverlay">
+  <div class="gate-box">
+    <div class="gate-badge"><span>LT</span></div>
+    <h2>الموقع قيد التجهيز</h2>
+    <p>عم نجهز الكتالوج، لسا مش جاهز للزوار.<br>إذا معك كلمة السر، فوتي.</p>
+    <input id="gatePassword" type="password" inputmode="numeric" placeholder="••••" maxlength="10">
+    <button id="gateSubmit">دخول</button>
+    <p class="gate-error" id="gateError">كلمة السر غلط، حاولي مرة تانية</p>
+  </div>
+</div>
 
 <header>
   <div class="header-top">
@@ -294,8 +371,11 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
   <div class="cats-row" id="catsRow"></div>
 </header>
 
+<div class="delivery-banner" id="deliveryBanner"></div>
+
 <div class="hero">
   <img src="images/lt-logo-lockup.jpg" alt="Laval Trendz — نتميز.... لتتألقي / Crafted to make you shine">
+  <p class="brand-story" id="brandStory"></p>
 </div>
 
 <div class="social-row">
@@ -314,6 +394,8 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 
 <button class="cart-fab" id="cartFab"><span id="cartFabLabel">🛍 سلتي</span> <span class="badge" id="cartBadge">0</span></button>
 
+<div class="toast" id="toast"></div>
+
 <div class="lightbox-overlay" id="lightboxOverlay">
   <button class="lightbox-close" id="lightboxClose">×</button>
   <img id="lightboxImg" src="" alt="">
@@ -327,6 +409,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
   </div>
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-foot">
+    <p class="delivery-note" id="deliveryNoteCart"></p>
     <div class="total-row"><span id="drawerTotalLabel">المجموع</span><b id="drawerTotal">0 د.أ</b></div>
     <button class="checkout-btn" id="checkoutBtn"><span id="checkoutBtnText">إتمام الطلب عبر واتساب</span></button>
   </div>
@@ -354,6 +437,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
     </div>
     <p id="formError" style="display:none; color:var(--brick); font-size:12.5px; margin:-6px 0 12px;"></p>
     <div class="tag-summary" id="tagSummary"></div>
+    <p class="delivery-note" id="deliveryNoteTag"></p>
     <div class="total-row"><span id="tagTotalLabelText">الإجمالي</span><b id="tagTotal">0 د.أ</b></div>
     <div class="modal-actions">
       <button class="btn-cancel" id="cancelModal"><span id="cancelBtnText">رجوع</span></button>
@@ -374,6 +458,39 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
     gtag('config', 'G-XXXXXXX');
   </script>
 ============================================================ -->
+
+<script>
+/* =====================================================
+   بوابة كلمة السر — عدّلي كلمة السر هون
+   لما تخلصي وتصير جاهزة تفتحي الموقع للكل، احذفي هاد الجزء كامل
+   (من هون لحد نهاية هاد السكريبت) وامسحي #gateOverlay من الـ HTML فوق
+===================================================== */
+const GATE_PASSWORD = "2480";
+
+(function(){
+  const overlay = document.getElementById('gateOverlay');
+  const input = document.getElementById('gatePassword');
+  const btn = document.getElementById('gateSubmit');
+  const err = document.getElementById('gateError');
+
+  if(sessionStorage.getItem('lt_unlocked') === 'true'){
+    overlay.style.display = 'none';
+  }
+
+  function tryUnlock(){
+    if(input.value.trim() === GATE_PASSWORD){
+      sessionStorage.setItem('lt_unlocked', 'true');
+      overlay.style.display = 'none';
+    } else {
+      err.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+  btn.addEventListener('click', tryUnlock);
+  input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') tryUnlock(); });
+})();
+</script>
 
 <script>
 const WHATSAPP_NUMBER = "962787899933";
@@ -629,6 +746,12 @@ const STR = {
     waPhone:"رقم الجوال",
     waCity:"المنطقة",
     waNotes:"ملاحظات",
+    deliveryBanner:"🚚 التوصيل لجميع أنحاء المملكة بـ <b>2 دينار فقط</b>",
+    deliveryNote:"التوصيل: 2 د.أ لكل المملكة — الدفع كاش أو كليك عند الاستلام",
+    waDelivery:"التوصيل: 2 د.أ (كاش أو كليك عند الاستلام)",
+    brandStory:"تطريز فلسطيني أصيل، غرزة غرزة، بلمسة عصرية — كل قطعة من لافال تريندز مصنوعة بعناية لتحكي حكاية تراث بأناقة اليوم.",
+    addedToast:"✓ تمت الإضافة للسلة",
+    emptySearch:"ما لقينا نتيجة مطابقة.<br>جربي اسم تاني أو تصفحي الفئات فوق.",
   },
   en:{
     tagline:"Crafted to make you shine",
@@ -661,6 +784,12 @@ const STR = {
     waPhone:"Phone",
     waCity:"Area",
     waNotes:"Notes",
+    deliveryBanner:"🚚 Delivery across Jordan for only <b>2 JOD</b>",
+    deliveryNote:"Delivery: 2 JOD nationwide — Cash or Click on delivery",
+    waDelivery:"Delivery: 2 JOD (cash or click on delivery)",
+    brandStory:"Authentic Palestinian embroidery, stitch by stitch, with a modern touch — every Laval Trendz piece is crafted to tell a story of heritage with today's elegance.",
+    addedToast:"✓ Added to cart",
+    emptySearch:"No matching results found.<br>Try another name or browse the categories above.",
   }
 };
 
@@ -694,6 +823,10 @@ function applyStaticText(){
   document.getElementById('cancelBtnText').textContent = s.cancelBtn;
   document.getElementById('sendBtnText').textContent = s.sendBtn;
   document.getElementById('footerText').textContent = s.footer;
+  document.getElementById('deliveryBanner').innerHTML = s.deliveryBanner;
+  document.getElementById('deliveryNoteCart').textContent = s.deliveryNote;
+  document.getElementById('deliveryNoteTag').textContent = s.deliveryNote;
+  document.getElementById('brandStory').textContent = s.brandStory;
 }
 
 document.getElementById('langToggle').addEventListener('click', ()=>{
@@ -733,6 +866,12 @@ function renderGrid(){
   const list = filteredProducts();
   document.getElementById('countLine').textContent = `${list.length} ${t().countSuffix}`;
   const grid = document.getElementById('grid');
+
+  if(list.length === 0){
+    grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--ink-soft); padding:50px 20px; font-size:14px;">${t().emptySearch}</p>`;
+    return;
+  }
+
   grid.innerHTML = list.map(p=>{
     const qty = cart[p.id]?.qty || 0;
     return `
@@ -775,9 +914,19 @@ function changeQty(id, delta){
   if(!cart[id]) cart[id] = {product, qty:0};
   cart[id].qty += delta;
   if(cart[id].qty<=0) delete cart[id];
+  if(delta > 0) showToast(t().addedToast);
   renderGrid();
   renderCartBadge();
   renderDrawer();
+}
+
+let toastTimer = null;
+function showToast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> el.classList.remove('show'), 1800);
 }
 
 function cartCount(){ return Object.values(cart).reduce((s,i)=>s+i.qty,0); }
@@ -881,6 +1030,7 @@ document.getElementById('sendWhatsapp').addEventListener('click', ()=>{
     msg += `• ${prodName(i.product)} × ${i.qty} — ${fmt(i.product.price*i.qty)}\n`;
   });
   msg += `\n${s.waTotal}: ${fmt(cartTotal())}`;
+  msg += `\n${s.waDelivery}`;
   msg += `\n${s.waName}: ${name}`;
   msg += `\n${s.waPhone}: ${phone}`;
   if(city) msg += `\n${s.waCity}: ${city}`;
