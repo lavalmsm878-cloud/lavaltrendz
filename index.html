@@ -167,6 +167,15 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
   padding:4px 9px; border-radius:999px; letter-spacing:.3px;
 }
 [dir="ltr"] .card-badge{right:auto; left:8px;}
+.fav-btn{
+  position:absolute; top:8px; left:8px; z-index:2;
+  width:30px; height:30px; border-radius:50%; border:none;
+  background:rgba(255,253,249,.9); color:var(--brick);
+  font-size:16px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 1px 4px rgba(43,35,26,.15);
+}
+.fav-btn.active{color:var(--brick);}
+[dir="ltr"] .fav-btn{left:auto; right:8px;}
 .card-body{padding:12px 13px 13px; display:flex; flex-direction:column; gap:6px; flex:1;}
 .card-cat{font-size:11px; color:var(--gold); font-weight:700; letter-spacing:.4px;}
 .card-name{font-size:14.5px; font-weight:500; line-height:1.35; margin:0; min-height:38px;}
@@ -290,6 +299,12 @@ main{max-width:1100px; margin:0 auto; padding:22px 20px 100px;}
 .field{margin-bottom:12px;}
 .field label{display:block; font-size:12.5px; font-weight:700; margin-bottom:5px; color:var(--ink);}
 .field input{width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--line); font-family:'Tajawal',sans-serif; font-size:14px; background:var(--cream);}
+.phone-row{display:flex; gap:8px;}
+.phone-row select{
+  flex:0 0 auto; max-width:118px; padding:9px 6px; border-radius:8px; border:1px solid var(--line);
+  font-family:'Tajawal',sans-serif; font-size:13px; background:var(--cream); color:var(--ink);
+}
+.phone-row input{flex:1; min-width:0;}
 .tag-summary{border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); padding:10px 0; margin:14px 0; font-size:12.5px; color:var(--ink-soft); max-height:110px; overflow-y:auto;}
 .tag-summary div{display:flex; justify-content:space-between; padding:2px 0;}
 .modal-actions{display:flex; gap:10px;}
@@ -368,6 +383,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
         <input id="searchInput" type="text" placeholder="دور على موديل...">
         <span class="search-icon">⌕</span>
       </div>
+      <button class="lang-toggle" id="favToggle">♡ <span id="favCount">0</span></button>
       <button class="lang-toggle" id="langToggle">EN</button>
     </div>
   </div>
@@ -430,10 +446,13 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
     </div>
     <div class="field">
       <label id="phoneLabelText">رقم الجوال <span style="color:var(--brick)">*</span></label>
-      <input id="custPhone" type="tel" placeholder="07XXXXXXXX">
+      <div class="phone-row">
+        <select id="custDial"></select>
+        <input id="custPhone" type="tel" placeholder="7XXXXXXXX">
+      </div>
     </div>
     <div class="field">
-      <label id="cityLabelText">المدينة / المنطقة (اختياري)</label>
+      <label id="cityLabelText">المدينة / المنطقة <span style="color:var(--brick)">*</span></label>
       <input id="custCity" type="text" placeholder="مثال: عمّان - جبل الحسين">
     </div>
     <div class="field">
@@ -502,6 +521,7 @@ const GATE_PASSWORD = "2480";
 <script>
 const WHATSAPP_NUMBER = "962787899933";
 const DELIVERY_FEE = 2;
+const SITE_BASE_URL = "https://lavaltrendz.com/";
 
 /* =====================================================
    مصدر المنتجات — جوجل شيت (اختياري)
@@ -510,6 +530,74 @@ const DELIVERY_FEE = 2;
    3) لو تركتيه فاضي، الموقع بيستخدم النسخة المحفوظة بالكود (FALLBACK_PRODUCTS) تلقائياً
 ===================================================== */
 const GOOGLE_SHEET_CSV_URL = "";
+
+/* =====================================================
+   قائمة رموز الدول لخانة رقم الجوال — الأردن أول خيار دايماً
+===================================================== */
+const COUNTRIES = [
+  {code:"962", ar:"الأردن", en:"Jordan"},
+  {code:"966", ar:"السعودية", en:"Saudi Arabia"},
+  {code:"971", ar:"الإمارات", en:"United Arab Emirates"},
+  {code:"965", ar:"الكويت", en:"Kuwait"},
+  {code:"973", ar:"البحرين", en:"Bahrain"},
+  {code:"974", ar:"قطر", en:"Qatar"},
+  {code:"968", ar:"عُمان", en:"Oman"},
+  {code:"970", ar:"فلسطين", en:"Palestine"},
+  {code:"20", ar:"مصر", en:"Egypt"},
+  {code:"961", ar:"لبنان", en:"Lebanon"},
+  {code:"963", ar:"سوريا", en:"Syria"},
+  {code:"964", ar:"العراق", en:"Iraq"},
+  {code:"218", ar:"ليبيا", en:"Libya"},
+  {code:"216", ar:"تونس", en:"Tunisia"},
+  {code:"213", ar:"الجزائر", en:"Algeria"},
+  {code:"212", ar:"المغرب", en:"Morocco"},
+  {code:"249", ar:"السودان", en:"Sudan"},
+  {code:"967", ar:"اليمن", en:"Yemen"},
+  {code:"90", ar:"تركيا", en:"Turkey"},
+  {code:"98", ar:"إيران", en:"Iran"},
+  {code:"93", ar:"أفغانستان", en:"Afghanistan"},
+  {code:"92", ar:"باكستان", en:"Pakistan"},
+  {code:"91", ar:"الهند", en:"India"},
+  {code:"880", ar:"بنغلاديش", en:"Bangladesh"},
+  {code:"94", ar:"سريلانكا", en:"Sri Lanka"},
+  {code:"63", ar:"الفلبين", en:"Philippines"},
+  {code:"62", ar:"إندونيسيا", en:"Indonesia"},
+  {code:"60", ar:"ماليزيا", en:"Malaysia"},
+  {code:"65", ar:"سنغافورة", en:"Singapore"},
+  {code:"66", ar:"تايلاند", en:"Thailand"},
+  {code:"86", ar:"الصين", en:"China"},
+  {code:"81", ar:"اليابان", en:"Japan"},
+  {code:"82", ar:"كوريا الجنوبية", en:"South Korea"},
+  {code:"1", ar:"الولايات المتحدة", en:"United States"},
+  {code:"1", ar:"كندا", en:"Canada"},
+  {code:"44", ar:"بريطانيا", en:"United Kingdom"},
+  {code:"353", ar:"إيرلندا", en:"Ireland"},
+  {code:"49", ar:"ألمانيا", en:"Germany"},
+  {code:"33", ar:"فرنسا", en:"France"},
+  {code:"39", ar:"إيطاليا", en:"Italy"},
+  {code:"34", ar:"إسبانيا", en:"Spain"},
+  {code:"351", ar:"البرتغال", en:"Portugal"},
+  {code:"31", ar:"هولندا", en:"Netherlands"},
+  {code:"32", ar:"بلجيكا", en:"Belgium"},
+  {code:"41", ar:"سويسرا", en:"Switzerland"},
+  {code:"43", ar:"النمسا", en:"Austria"},
+  {code:"46", ar:"السويد", en:"Sweden"},
+  {code:"47", ar:"النرويج", en:"Norway"},
+  {code:"45", ar:"الدنمارك", en:"Denmark"},
+  {code:"358", ar:"فنلندا", en:"Finland"},
+  {code:"48", ar:"بولندا", en:"Poland"},
+  {code:"30", ar:"اليونان", en:"Greece"},
+  {code:"7", ar:"روسيا", en:"Russia"},
+  {code:"380", ar:"أوكرانيا", en:"Ukraine"},
+  {code:"27", ar:"جنوب أفريقيا", en:"South Africa"},
+  {code:"234", ar:"نيجيريا", en:"Nigeria"},
+  {code:"254", ar:"كينيا", en:"Kenya"},
+  {code:"61", ar:"أستراليا", en:"Australia"},
+  {code:"64", ar:"نيوزيلندا", en:"New Zealand"},
+  {code:"55", ar:"البرازيل", en:"Brazil"},
+  {code:"52", ar:"المكسيك", en:"Mexico"},
+  {code:"54", ar:"الأرجنتين", en:"Argentina"},
+];
 
 /* =====================================================
    الفئات — key ثابت للاستخدام الداخلي، ar/en للعرض
@@ -762,6 +850,9 @@ const STR = {
     brandStory:"تطريز فلاحي أصيل، غرزة غرزة، بلمسة عصرية — كل قطعة من لافال تريندز مصنوعة بعناية لتحكي حكاية تراث بأناقة اليوم.",
     addedToast:"✓ تمت الإضافة لسلة السعادة",
     emptySearch:"ما لقينا نتيجة مطابقة.<br>جربي اسم تاني أو تصفحي الفئات فوق.",
+    favToggleLabel:"أضف للمفضلة",
+    emptyFav:"لسا ما ضفتي شي للمفضلة.<br>دوسي على القلب ♡ فوق أي منتج تحبيه.",
+    phoneRequiredHint:"رقم الجوال والمنطقة حقول إجبارية، فضلاً عبيهم قبل الإرسال 🙏",
   },
   en:{
     tagline:"Crafted to make you shine",
@@ -802,6 +893,9 @@ const STR = {
     brandStory:"Authentic Palestinian embroidery, stitch by stitch, with a modern touch — every Laval Trendz piece is crafted to tell a story of heritage with today's elegance.",
     addedToast:"✓ Added to Basket of Happiness",
     emptySearch:"No matching results found.<br>Try another name or browse the categories above.",
+    favToggleLabel:"Add to favorites",
+    emptyFav:"You haven't added any favorites yet.<br>Tap the ♡ on any product you like.",
+    phoneRequiredHint:"Phone number and area are required, please fill them in before sending 🙏",
   }
 };
 
@@ -809,17 +903,76 @@ let lang = "ar";
 let cart = {};
 let activeCategory = "all";
 let searchTerm = "";
+let showFavoritesOnly = false;
+let favorites = new Set();
+
+/* ===== التخزين الدائم (سلة، مفضلة، بيانات الزبون) — يبقى محفوظ حتى لو الزبون سكر المتصفح ===== */
+const CART_KEY = 'lt_cart_v1';
+const FAV_KEY = 'lt_favorites_v1';
+const CUSTOMER_KEY = 'lt_customer_v1';
+
+function saveCartToStorage(){
+  const data = {};
+  Object.keys(cart).forEach(id => { data[id] = cart[id].qty; });
+  try{ localStorage.setItem(CART_KEY, JSON.stringify(data)); }catch(e){}
+}
+function loadCartFromStorage(){
+  try{
+    const raw = localStorage.getItem(CART_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    Object.keys(data).forEach(idStr=>{
+      const id = Number(idStr);
+      const product = PRODUCTS.find(p=>p.id===id);
+      if(product && data[idStr] > 0) cart[id] = {product, qty: data[idStr]};
+    });
+  }catch(e){}
+}
+function loadFavoritesFromStorage(){
+  try{
+    const raw = localStorage.getItem(FAV_KEY);
+    if(raw) favorites = new Set(JSON.parse(raw));
+  }catch(e){}
+}
+function saveFavoritesToStorage(){
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(favorites))); }catch(e){}
+}
+function toggleFavorite(id){
+  if(favorites.has(id)) favorites.delete(id); else favorites.add(id);
+  saveFavoritesToStorage();
+  renderGrid();
+  renderFavCount();
+}
+function saveCustomerToStorage(name, phone, city, dial){
+  try{ localStorage.setItem(CUSTOMER_KEY, JSON.stringify({name, phone, city, dial})); }catch(e){}
+}
+function loadCustomerFromStorage(){
+  try{
+    const raw = localStorage.getItem(CUSTOMER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
 
 function t(){ return STR[lang]; }
 function fmt(n){ return n.toLocaleString('en-US') + (lang==='ar' ? " د.أ" : " JOD"); }
 function catLabel(key){ const c = CATEGORIES.find(c=>c.key===key); return c ? c[lang] : key; }
 function prodName(p){ return lang==='ar' ? p.nameAr : p.nameEn; }
 
+function populateCountryDropdown(){
+  const sel = document.getElementById('custDial');
+  const prevValue = sel.value;
+  sel.innerHTML = COUNTRIES.map(c =>
+    `<option value="${c.code}">${c[lang]} +${c.code}</option>`
+  ).join('');
+  if(prevValue && COUNTRIES.some(c=>c.code===prevValue)) sel.value = prevValue;
+}
+
 function applyStaticText(){
   const s = t();
   document.getElementById('htmlRoot').lang = lang;
   document.getElementById('htmlRoot').dir = lang==='ar' ? 'rtl' : 'ltr';
   document.getElementById('searchInput').placeholder = s.searchPlaceholder;
+  populateCountryDropdown();
   document.getElementById('langToggle').textContent = s.langBtn;
   document.getElementById('cartFabLabel').textContent = s.cartFab;
   document.getElementById('drawerTitle').textContent = s.drawerTitle;
@@ -853,6 +1006,13 @@ document.getElementById('langToggle').addEventListener('click', ()=>{
   renderCats();
   renderGrid();
   renderDrawer();
+  renderFavCount();
+});
+
+document.getElementById('favToggle').addEventListener('click', ()=>{
+  showFavoritesOnly = !showFavoritesOnly;
+  renderFavCount();
+  renderGrid();
 });
 
 function renderCats(){
@@ -870,8 +1030,13 @@ function filteredProducts(){
     const matchesCat = activeCategory==="all" || p.categoryKey===activeCategory;
     const matchesSearch = prodName(p).includes(searchTerm.trim());
     const inStock = (p.stock === null || p.stock === undefined) || p.stock > 0;
-    return matchesCat && matchesSearch && inStock;
+    const matchesFav = !showFavoritesOnly || favorites.has(p.id);
+    return matchesCat && matchesSearch && inStock && matchesFav;
   });
+}
+
+function renderFavCount(){
+  document.getElementById('favToggle').innerHTML = (showFavoritesOnly ? '♥ ' : '♡ ') + `<span id="favCount">${favorites.size}</span>`;
 }
 
 function badgeLabel(b){
@@ -886,7 +1051,8 @@ function renderGrid(){
   const grid = document.getElementById('grid');
 
   if(list.length === 0){
-    grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--ink-soft); padding:50px 20px; font-size:14px;">${t().emptySearch}</p>`;
+    const msg = showFavoritesOnly ? t().emptyFav : t().emptySearch;
+    grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--ink-soft); padding:50px 20px; font-size:14px;">${msg}</p>`;
     return;
   }
 
@@ -897,6 +1063,7 @@ function renderGrid(){
       <div class="card-img" data-img="${p.img}" data-name="${prodName(p)}">
         <img src="${p.img}" alt="${prodName(p)}" loading="lazy">
         ${p.badge ? `<span class="card-badge">${badgeLabel(p.badge)}</span>` : ''}
+        <button class="fav-btn ${favorites.has(p.id) ? 'active' : ''}" data-favid="${p.id}" aria-label="${t().favToggleLabel}">${favorites.has(p.id) ? '♥' : '♡'}</button>
       </div>
       <div class="card-body">
         <span class="card-cat">${catLabel(p.categoryKey)}</span>
@@ -925,6 +1092,9 @@ function renderGrid(){
   grid.querySelectorAll('.card-img').forEach(el=>{
     el.addEventListener('click', ()=> openLightbox(el.dataset.img, el.dataset.name));
   });
+  grid.querySelectorAll('.fav-btn').forEach(b=>{
+    b.addEventListener('click', (e)=>{ e.stopPropagation(); toggleFavorite(Number(b.dataset.favid)); });
+  });
 }
 
 function changeQty(id, delta){
@@ -933,6 +1103,7 @@ function changeQty(id, delta){
   cart[id].qty += delta;
   if(cart[id].qty<=0) delete cart[id];
   if(delta > 0) showToast(t().addedToast);
+  saveCartToStorage();
   renderGrid();
   renderCartBadge();
   renderDrawer();
@@ -978,7 +1149,7 @@ function renderDrawer(){
     body.querySelectorAll('button[data-act]').forEach(b=>{
       b.addEventListener('click', ()=>{
         const id = Number(b.dataset.id);
-        if(b.dataset.act==='remove'){ delete cart[id]; renderGrid(); renderCartBadge(); renderDrawer(); }
+        if(b.dataset.act==='remove'){ delete cart[id]; saveCartToStorage(); renderGrid(); renderCartBadge(); renderDrawer(); }
         else changeQty(id, b.dataset.act==='plus'?1:-1);
       });
     });
@@ -1024,6 +1195,17 @@ document.getElementById('checkoutBtn').addEventListener('click', ()=>{
   ).join('');
   document.getElementById('tagSubtotal').textContent = fmt(cartTotal());
   document.getElementById('tagTotal').textContent = fmt(grandTotal());
+
+  const saved = loadCustomerFromStorage();
+  if(saved){
+    document.getElementById('custName').value = saved.name || '';
+    document.getElementById('custPhone').value = saved.phone || '';
+    document.getElementById('custCity').value = saved.city || '';
+    if(saved.dial && COUNTRIES.some(c=>c.code===saved.dial)){
+      document.getElementById('custDial').value = saved.dial;
+    }
+  }
+
   modalOverlay.classList.add('open');
 });
 
@@ -1033,28 +1215,32 @@ document.getElementById('cancelModal').addEventListener('click', ()=>{
 
 document.getElementById('sendWhatsapp').addEventListener('click', ()=>{
   const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
+  const dial = document.getElementById('custDial').value;
+  const phoneDigits = document.getElementById('custPhone').value.trim();
+  const phone = phoneDigits ? `+${dial} ${phoneDigits}` : '';
   const city = document.getElementById('custCity').value.trim();
   const notes = document.getElementById('custNotes').value.trim();
   const errorMsg = document.getElementById('formError');
   const s = t();
 
-  if(!name || !phone){
-    errorMsg.textContent = s.formError;
+  if(!name || !phoneDigits || !city){
+    errorMsg.textContent = s.phoneRequiredHint;
     errorMsg.style.display = 'block';
     return;
   }
   errorMsg.style.display = 'none';
+  saveCustomerToStorage(name, phoneDigits, city, dial);
 
   let msg = `${s.waIntro}\n\n`;
   Object.values(cart).forEach(i=>{
-    msg += `• ${prodName(i.product)} × ${i.qty} — ${fmt(i.product.price*i.qty)}\n`;
+    const imgUrl = SITE_BASE_URL + i.product.img;
+    msg += `• ${prodName(i.product)} × ${i.qty} — ${fmt(i.product.price*i.qty)}\n  ${imgUrl}\n`;
   });
   msg += `\n${s.waTotal}: ${fmt(grandTotal())}`;
   msg += `\n${s.waDelivery}`;
   msg += `\n${s.waName}: ${name}`;
   msg += `\n${s.waPhone}: ${phone}`;
-  if(city) msg += `\n${s.waCity}: ${city}`;
+  msg += `\n${s.waCity}: ${city}`;
   if(notes) msg += `\n${s.waNotes}: ${notes}`;
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -1066,10 +1252,13 @@ async function init(){
   applyStaticText();
   document.getElementById('countLine').textContent = lang==='ar' ? 'جاري تحميل المنتجات...' : 'Loading products...';
   await loadProducts();
+  loadCartFromStorage();
+  loadFavoritesFromStorage();
   renderCats();
   renderGrid();
   renderCartBadge();
   renderDrawer();
+  renderFavCount();
 }
 init();
 </script>
