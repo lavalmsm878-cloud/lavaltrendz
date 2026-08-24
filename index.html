@@ -131,11 +131,11 @@ header{
   font-weight:700; font-size:13.5px; cursor:pointer; margin:16px 0 10px; display:flex; align-items:center; gap:4px;
 }
 .browse-heading{font-family:'Cinzel',serif; font-size:19px; color:var(--walnut); margin:16px 0 12px; letter-spacing:.5px;}
-.models-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px;}
-.model-card{cursor:pointer; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--surface); transition:transform .18s ease, box-shadow .18s ease;}
+.models-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:16px;}
+.model-card{cursor:pointer; border-radius:14px; overflow:hidden; border:1px solid var(--line); background:var(--surface); transition:transform .18s ease, box-shadow .18s ease;}
 .model-card:hover{transform:translateY(-3px); box-shadow:0 8px 20px rgba(43,35,26,.10);}
 .model-card img{width:100%; aspect-ratio:4/5; object-fit:cover; display:block;}
-.model-card .model-name{padding:9px 6px; text-align:center; font-size:13px; font-weight:700; color:var(--walnut);}
+.model-card .model-name{padding:10px 8px; text-align:center; font-size:14px; font-weight:700; color:var(--walnut); font-family:'Cinzel','Tajawal',sans-serif; letter-spacing:.3px;}
 
 
 /* ===== Delivery banner ===== */
@@ -1012,7 +1012,13 @@ const BROWSE_STR = {
   ar:{tatreez:"شنط تطريز", leather:"شنط جلد", soon:"قريباً", back:"رجوع", pickModel:"اختاري موديل", allTag:"كل النقشات"},
   en:{tatreez:"Embroidered bags", leather:"Leather bags", soon:"Coming soon", back:"Back", pickModel:"Choose a model", allTag:"All patterns"},
 };
-function modelKeyOf(p){ const parts = p.img.split('/'); return parts.length>2 ? parts[1] : null; }
+function modelKeyOf(p){
+  const parts = p.img.split('/');
+  if(parts.length <= 2) return null;
+  const raw = parts[1];
+  if(raw === '1' || raw === '2') return 'asala'; // مجلدات أصالة القديمة (تسمية Windows الغلط)
+  return raw;
+}
 function groupOf(p){ return p.categoryKey==='handbag_plain' ? 'leather' : 'tatreez'; }
 
 let browseState = {level:'tiles', group:null, modelKey:null};
@@ -1027,7 +1033,9 @@ function renderBrowse(){
     el.innerHTML = `<div class="browse-tiles" id="tileRow"></div>`;
     const row = document.getElementById('tileRow');
     ['tatreez','leather'].forEach(group=>{
-      const imgs = [...new Set(PRODUCTS.filter(p=>groupOf(p)===group).map(p=>p.img))].slice(0,6);
+      const groupProducts = PRODUCTS.filter(p=>groupOf(p)===group);
+      const heroModel = groupProducts.length ? modelKeyOf(groupProducts[0]) : null;
+      const imgs = heroModel ? groupProducts.filter(p=>modelKeyOf(p)===heroModel).map(p=>p.img).slice(0,6) : [];
       const tile = document.createElement('div');
       if(imgs.length===0){
         tile.className = 'browse-tile empty';
@@ -1078,18 +1086,53 @@ function renderBrowse(){
     el.innerHTML = `
       <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
       <p class="browse-heading">${info[lang]} — ${bs.allTag}</p>
-      <div class="models-grid" id="variantsGrid"></div>`;
+      <div class="grid" id="variantsGrid"></div>`;
     document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState.level='models'; browseState.modelKey=null; renderBrowse(); });
-    const grid = document.getElementById('variantsGrid');
-    items.forEach(p=>{
-      const card = document.createElement('div');
-      card.className = 'model-card';
-      card.innerHTML = `<img src="${p.img}" loading="lazy"><div class="model-name">${fmt(p.price)}</div>`;
-      card.addEventListener('click', ()=> openLightbox(p.img, prodName(p)));
-      grid.appendChild(card);
-    });
+    renderVariantCards(items, document.getElementById('variantsGrid'));
     return;
   }
+}
+
+function renderVariantCards(items, grid){
+  grid.innerHTML = items.map(p=>{
+    const qty = cart[p.id]?.qty || 0;
+    return `
+    <div class="card">
+      <div class="card-img" data-img="${p.img}" data-name="${prodName(p)}">
+        <img src="${p.img}" alt="${prodName(p)}" loading="lazy">
+        ${p.badge ? `<span class="card-badge">${badgeLabel(p.badge)}</span>` : ''}
+        <button class="fav-btn ${favorites.has(p.id) ? 'active' : ''}" data-favid="${p.id}" aria-label="${t().favToggleLabel}">${favorites.has(p.id) ? '♥' : '♡'}</button>
+      </div>
+      <div class="card-body">
+        <span class="card-cat">${catLabel(p.categoryKey)}</span>
+        <p class="card-name">${prodName(p)}</p>
+        ${(lang==='ar' ? p.sizeAr : p.sizeEn) ? `<span class="card-size">${lang==='ar' ? p.sizeAr : p.sizeEn}</span>` : ''}
+        ${(p.stock !== null && p.stock !== undefined && p.stock <= 3) ? `<span class="card-stock">${lang==='ar' ? 'باقي '+p.stock+' قطع فقط' : 'Only '+p.stock+' left'}</span>` : ''}
+        <span class="card-price">${fmt(p.price)}</span>
+        ${qty===0
+          ? `<button class="add-btn" data-id="${p.id}">${t().addBtn}</button>`
+          : `<div class="qty-row">
+               <button data-id="${p.id}" data-act="minus">−</button>
+               <span>${qty}</span>
+               <button data-id="${p.id}" data-act="plus">+</button>
+             </div>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.add-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{ changeQty(Number(b.dataset.id), 1); renderBrowse(); });
+  });
+  grid.querySelectorAll('.qty-row button').forEach(b=>{
+    b.addEventListener('click', ()=>{ changeQty(Number(b.dataset.id), b.dataset.act==='plus'?1:-1); renderBrowse(); });
+  });
+  grid.querySelectorAll('.card-img').forEach(elx=>{
+    elx.addEventListener('click', ()=> openLightbox(elx.dataset.img, elx.dataset.name));
+  });
+  grid.querySelectorAll('.fav-btn').forEach(b=>{
+    b.addEventListener('click', (e)=>{ e.stopPropagation(); toggleFavorite(Number(b.dataset.favid)); renderBrowse(); });
+  });
 }
 
 
