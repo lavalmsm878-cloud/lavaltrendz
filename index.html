@@ -58,7 +58,7 @@ header{
   background:var(--surface); flex:0 0 auto;
   overflow:hidden;
 }
-.lt-badge img{width:100%; height:100%; object-fit:contain; padding:4px;}
+.lt-badge img{width:100%; height:100%; object-fit:cover; transform:scale(2.1); display:block;}
 .brand-text{display:flex; flex-direction:column; line-height:1.15;}
 .brand-text .name{
   font-family:'Cinzel',serif; font-weight:600;
@@ -103,6 +103,40 @@ header{
   display:flex; gap:16px; justify-content:flex-end;
 }
 .social-row a{color:var(--walnut); font-size:12.5px; text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px;}
+
+/* ===== قسم التصفح العلوي: صورتين -> شبكة موديلات -> شبكة نقشات ===== */
+.browse-wrap{max-width:1100px; margin:20px auto 0; padding:0 20px;}
+.browse-tiles{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.browse-tile{
+  position:relative; aspect-ratio:1/1; border-radius:16px; overflow:hidden;
+  cursor:pointer; background:var(--cream-deep); border:1px solid var(--line);
+}
+.browse-tile img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1.1s ease;
+}
+.browse-tile img.show{opacity:1;}
+.browse-tile .tile-label{
+  position:absolute; bottom:0; left:0; right:0; padding:16px 10px 14px;
+  background:linear-gradient(transparent, rgba(43,35,26,.78));
+  color:#fff; text-align:center; font-family:'Cinzel',serif; font-weight:600;
+  font-size:clamp(14px,3.6vw,20px); letter-spacing:1px; z-index:2;
+}
+.browse-tile.empty{display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;}
+.browse-tile.empty .tile-label{position:static; background:none; color:var(--walnut);}
+.browse-tile.empty .tile-soon{font-family:'Tajawal',sans-serif; font-size:12px; color:var(--ink-soft);}
+
+.browse-back{
+  background:none; border:none; color:var(--walnut); font-family:'Tajawal',sans-serif;
+  font-weight:700; font-size:13.5px; cursor:pointer; margin:16px 0 10px; display:flex; align-items:center; gap:4px;
+}
+.browse-heading{font-family:'Cinzel',serif; font-size:19px; color:var(--walnut); margin:16px 0 12px; letter-spacing:.5px;}
+.models-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px;}
+.model-card{cursor:pointer; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--surface); transition:transform .18s ease, box-shadow .18s ease;}
+.model-card:hover{transform:translateY(-3px); box-shadow:0 8px 20px rgba(43,35,26,.10);}
+.model-card img{width:100%; aspect-ratio:4/5; object-fit:cover; display:block;}
+.model-card .model-name{padding:9px 6px; text-align:center; font-size:13px; font-weight:700; color:var(--walnut);}
+
 
 /* ===== Delivery banner ===== */
 .delivery-banner{
@@ -401,6 +435,8 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
   <a href="https://instagram.com/CHANGE_ME" target="_blank">Instagram</a>
   <a href="https://facebook.com/CHANGE_ME" target="_blank">Facebook</a>
 </div>
+
+<div class="browse-wrap" id="browseWrap"></div>
 
 <main>
   <p class="count-line" id="countLine"></p>
@@ -958,6 +994,105 @@ function fmt(n){ return n.toLocaleString('en-US') + (lang==='ar' ? " د.أ" : " 
 function catLabel(key){ const c = CATEGORIES.find(c=>c.key===key); return c ? c[lang] : key; }
 function prodName(p){ return lang==='ar' ? p.nameAr : p.nameEn; }
 
+/* =====================================================
+   قسم التصفح العلوي (صورتين -> موديلات -> نقشات)
+   مستقل تماماً عن شريط التصنيفات والشبكة القديمة تحت — ما بيأثر عليهم
+===================================================== */
+const MODEL_INFO = {
+  "layali":{ar:"ليالي",en:"Layali"}, "asala":{ar:"أصالة",en:"Asala"}, "dana":{ar:"دانة",en:"Dana"},
+  "shams-albilad":{ar:"شمس البلاد",en:"Shams Al-Bilad"}, "rafeef":{ar:"رفيف",en:"Rafeef"},
+  "ronaq":{ar:"رونق",en:"Ronaq"}, "dafa":{ar:"دفء",en:"Dafa"}, "ghazal":{ar:"غزال",en:"Ghazal"},
+  "sawsana":{ar:"سوسنة",en:"Sawsana"}, "hikaya":{ar:"حكاية",en:"Hikaya"},
+  "zahrat-allawz":{ar:"زهرة اللوز",en:"Zahrat Al-Lawz"}, "lutf":{ar:"لطف",en:"Lutf"},
+  "baydar":{ar:"بيدر",en:"Baydar"}, "watar":{ar:"وتر",en:"Watar"}, "nibras":{ar:"نبراس",en:"Nibras"},
+  "aghsan":{ar:"أغصان",en:"Aghsan"}, "karma":{ar:"كرمة",en:"Karmeh"}, "dalya":{ar:"داليه",en:"Dalya"},
+  "muruj":{ar:"مروج",en:"Muruj"},
+};
+const BROWSE_STR = {
+  ar:{tatreez:"شنط تطريز", leather:"شنط جلد", soon:"قريباً", back:"رجوع", pickModel:"اختاري موديل", allTag:"كل النقشات"},
+  en:{tatreez:"Embroidered bags", leather:"Leather bags", soon:"Coming soon", back:"Back", pickModel:"Choose a model", allTag:"All patterns"},
+};
+function modelKeyOf(p){ const parts = p.img.split('/'); return parts.length>2 ? parts[1] : null; }
+function groupOf(p){ return p.categoryKey==='handbag_plain' ? 'leather' : 'tatreez'; }
+
+let browseState = {level:'tiles', group:null, modelKey:null};
+let tileTimers = [];
+
+function renderBrowse(){
+  tileTimers.forEach(t=>clearInterval(t)); tileTimers = [];
+  const el = document.getElementById('browseWrap');
+  const bs = BROWSE_STR[lang];
+
+  if(browseState.level === 'tiles'){
+    el.innerHTML = `<div class="browse-tiles" id="tileRow"></div>`;
+    const row = document.getElementById('tileRow');
+    ['tatreez','leather'].forEach(group=>{
+      const imgs = [...new Set(PRODUCTS.filter(p=>groupOf(p)===group).map(p=>p.img))].slice(0,6);
+      const tile = document.createElement('div');
+      if(imgs.length===0){
+        tile.className = 'browse-tile empty';
+        tile.innerHTML = `<span class="tile-label">${bs[group]}</span><span class="tile-soon">${bs.soon}</span>`;
+      } else {
+        tile.className = 'browse-tile';
+        tile.innerHTML = imgs.map((src,i)=>`<img src="${src}" class="${i===0?'show':''}">`).join('') + `<span class="tile-label">${bs[group]}</span>`;
+        if(imgs.length>1){
+          let idx = 0;
+          const imgEls = tile.querySelectorAll('img');
+          const timer = setInterval(()=>{
+            imgEls[idx].classList.remove('show');
+            idx = (idx+1) % imgEls.length;
+            imgEls[idx].classList.add('show');
+          }, 2600);
+          tileTimers.push(timer);
+        }
+        tile.addEventListener('click', ()=>{ browseState = {level:'models', group, modelKey:null}; renderBrowse(); });
+      }
+      row.appendChild(tile);
+    });
+    return;
+  }
+
+  if(browseState.level === 'models'){
+    const modelKeys = [...new Set(PRODUCTS.filter(p=>groupOf(p)===browseState.group).map(modelKeyOf))].filter(Boolean);
+    el.innerHTML = `
+      <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
+      <p class="browse-heading">${bs[browseState.group]} — ${bs.pickModel}</p>
+      <div class="models-grid" id="modelsGrid"></div>`;
+    document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState = {level:'tiles', group:null, modelKey:null}; renderBrowse(); });
+    const grid = document.getElementById('modelsGrid');
+    modelKeys.forEach(mk=>{
+      const first = PRODUCTS.find(p=> modelKeyOf(p)===mk && groupOf(p)===browseState.group);
+      const info = MODEL_INFO[mk] || {ar:mk, en:mk};
+      const card = document.createElement('div');
+      card.className = 'model-card';
+      card.innerHTML = `<img src="${first.img}" loading="lazy"><div class="model-name">${info[lang]}</div>`;
+      card.addEventListener('click', ()=>{ browseState.level='variants'; browseState.modelKey=mk; renderBrowse(); });
+      grid.appendChild(card);
+    });
+    return;
+  }
+
+  if(browseState.level === 'variants'){
+    const items = PRODUCTS.filter(p=> modelKeyOf(p)===browseState.modelKey && groupOf(p)===browseState.group);
+    const info = MODEL_INFO[browseState.modelKey] || {ar:browseState.modelKey, en:browseState.modelKey};
+    el.innerHTML = `
+      <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
+      <p class="browse-heading">${info[lang]} — ${bs.allTag}</p>
+      <div class="models-grid" id="variantsGrid"></div>`;
+    document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState.level='models'; browseState.modelKey=null; renderBrowse(); });
+    const grid = document.getElementById('variantsGrid');
+    items.forEach(p=>{
+      const card = document.createElement('div');
+      card.className = 'model-card';
+      card.innerHTML = `<img src="${p.img}" loading="lazy"><div class="model-name">${fmt(p.price)}</div>`;
+      card.addEventListener('click', ()=> openLightbox(p.img, prodName(p)));
+      grid.appendChild(card);
+    });
+    return;
+  }
+}
+
+
 function populateCountryDropdown(){
   const sel = document.getElementById('custDial');
   const prevValue = sel.value;
@@ -1007,6 +1142,7 @@ document.getElementById('langToggle').addEventListener('click', ()=>{
   renderGrid();
   renderDrawer();
   renderFavCount();
+  renderBrowse();
 });
 
 document.getElementById('favToggle').addEventListener('click', ()=>{
@@ -1259,6 +1395,7 @@ async function init(){
   renderCartBadge();
   renderDrawer();
   renderFavCount();
+  renderBrowse();
 }
 init();
 </script>
