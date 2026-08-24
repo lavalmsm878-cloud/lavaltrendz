@@ -134,7 +134,12 @@ header{
 .models-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:16px;}
 .model-card{cursor:pointer; border-radius:14px; overflow:hidden; border:1px solid var(--line); background:var(--surface); transition:transform .18s ease, box-shadow .18s ease;}
 .model-card:hover{transform:translateY(-3px); box-shadow:0 8px 20px rgba(43,35,26,.10);}
-.model-card img{width:100%; aspect-ratio:4/5; object-fit:cover; display:block;}
+.model-img-wrap{position:relative; width:100%; aspect-ratio:4/5; background:var(--cream-deep); overflow:hidden;}
+.model-img-wrap img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1s ease;
+}
+.model-img-wrap img.show{opacity:1;}
 .model-card .model-name{padding:10px 8px; text-align:center; font-size:14px; font-weight:700; color:var(--walnut); font-family:'Cinzel','Tajawal',sans-serif; letter-spacing:.3px;}
 
 
@@ -1069,11 +1074,22 @@ function renderBrowse(){
     document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState = {level:'tiles', group:null, modelKey:null}; renderBrowse(); });
     const grid = document.getElementById('modelsGrid');
     modelKeys.forEach(mk=>{
-      const first = PRODUCTS.find(p=> modelKeyOf(p)===mk && groupOf(p)===browseState.group);
+      const modelImgs = PRODUCTS.filter(p=> modelKeyOf(p)===mk && groupOf(p)===browseState.group).map(p=>p.img).slice(0,3);
       const info = MODEL_INFO[mk] || {ar:mk, en:mk};
       const card = document.createElement('div');
       card.className = 'model-card';
-      card.innerHTML = `<img src="${first.img}" loading="lazy"><div class="model-name">${info[lang]}</div>`;
+      const imgsHtml = modelImgs.map((src,i)=>`<img src="${src}" loading="lazy" class="${i===0?'show':''}">`).join('');
+      card.innerHTML = `<div class="model-img-wrap">${imgsHtml}</div><div class="model-name">${info[lang]}</div>`;
+      if(modelImgs.length>1){
+        let idx = 0;
+        const imgEls = card.querySelectorAll('img');
+        const timer = setInterval(()=>{
+          imgEls[idx].classList.remove('show');
+          idx = (idx+1) % imgEls.length;
+          imgEls[idx].classList.add('show');
+        }, 2600);
+        tileTimers.push(timer);
+      }
       card.addEventListener('click', ()=>{ browseState.level='variants'; browseState.modelKey=mk; renderBrowse(); });
       grid.appendChild(card);
     });
