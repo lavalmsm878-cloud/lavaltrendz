@@ -125,6 +125,24 @@ header{
 .browse-tile.empty{display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;}
 .browse-tile.empty .tile-label{position:static; background:none; color:var(--walnut);}
 .browse-tile.empty .tile-soon{font-family:'Tajawal',sans-serif; font-size:12px; color:var(--ink-soft);}
+.browse-tile.active{outline:3px solid var(--gold); outline-offset:2px;}
+
+/* ===== بانر الإعلانات ===== */
+.promo-banner{
+  margin:16px 0 6px; border-radius:16px; overflow:hidden; position:relative;
+  min-height:110px; display:flex; align-items:center;
+  background:var(--walnut);
+}
+.promo-banner img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.32;
+}
+.promo-text{position:relative; z-index:1; padding:18px 22px; text-align:center; width:100%;}
+.promo-line-ar{color:#fff; font-family:'Amiri',serif; font-size:clamp(14px,3.4vw,17px); margin:0 0 6px; line-height:1.6;}
+.promo-line-en{color:var(--gold-light); font-family:'Cinzel',serif; font-size:clamp(10px,2.4vw,12.5px); letter-spacing:.6px; margin:0;}
+
+.browse-empty{
+  text-align:center; padding:40px 20px; color:var(--ink-soft); font-size:14px;
+}
 
 .browse-back{
   background:none; border:none; color:var(--walnut); font-family:'Tajawal',sans-serif;
@@ -1019,14 +1037,14 @@ const BROWSE_STR = {
 };
 function modelKeyOf(p){
   const parts = p.img.split('/');
-  if(parts.length <= 2) return null;
-  const raw = parts[1];
-  if(raw === '1' || raw === '2') return 'asala'; // مجلدات أصالة القديمة (تسمية Windows الغلط)
-  return raw;
+  const filename = parts[parts.length-1]; // آخر جزء من الرابط، شغال مع أي شكل رابط (محلي أو Cloudinary)
+  const m = filename.match(/^(.+)-\d+\.\w+$/);
+  return m ? m[1] : null;
 }
 function groupOf(p){ return p.categoryKey==='handbag_plain' ? 'leather' : 'tatreez'; }
 
-let browseState = {level:'tiles', group:null, modelKey:null};
+let browseGroup = 'tatreez';   // أي مربع مفعّل حالياً (تطريز افتراضياً)
+let browseModel = null;        // null = عرض شبكة الموديلات، وإلا اسم الموديل المختار
 let tileTimers = [];
 
 function renderBrowse(){
@@ -1034,47 +1052,61 @@ function renderBrowse(){
   const el = document.getElementById('browseWrap');
   const bs = BROWSE_STR[lang];
 
-  if(browseState.level === 'tiles'){
-    el.innerHTML = `<div class="browse-tiles" id="tileRow"></div>`;
-    const row = document.getElementById('tileRow');
-    ['tatreez','leather'].forEach(group=>{
-      const groupProducts = PRODUCTS.filter(p=>groupOf(p)===group);
-      const heroModel = groupProducts.length ? modelKeyOf(groupProducts[0]) : null;
-      const imgs = heroModel ? groupProducts.filter(p=>modelKeyOf(p)===heroModel).map(p=>p.img).slice(0,6) : [];
-      const tile = document.createElement('div');
-      if(imgs.length===0){
-        tile.className = 'browse-tile empty';
-        tile.innerHTML = `<span class="tile-label">${bs[group]}</span><span class="tile-soon">${bs.soon}</span>`;
-      } else {
-        tile.className = 'browse-tile';
-        tile.innerHTML = imgs.map((src,i)=>`<img src="${src}" class="${i===0?'show':''}">`).join('') + `<span class="tile-label">${bs[group]}</span>`;
-        if(imgs.length>1){
-          let idx = 0;
-          const imgEls = tile.querySelectorAll('img');
-          const timer = setInterval(()=>{
-            imgEls[idx].classList.remove('show');
-            idx = (idx+1) % imgEls.length;
-            imgEls[idx].classList.add('show');
-          }, 2600);
-          tileTimers.push(timer);
-        }
-        tile.addEventListener('click', ()=>{ browseState = {level:'models', group, modelKey:null}; renderBrowse(); });
-      }
-      row.appendChild(tile);
-    });
-    return;
-  }
+  el.innerHTML = `
+    <div class="browse-tiles" id="tileRow"></div>
+    <div class="promo-banner">
+      <img src="https://res.cloudinary.com/f79q8qca/image/upload/v1787746081/layali-1.png" alt="">
+      <div class="promo-text">
+        <p class="promo-line-ar">تطريز فلاحي أصيل، غرزة غرزة — كل قطعة حكاية تراث بأيدي حرفيات ماهرات</p>
+        <p class="promo-line-en">Authentic Palestinian embroidery, stitched by hand — every piece tells a story</p>
+      </div>
+    </div>
+    <div id="browseBody"></div>`;
 
-  if(browseState.level === 'models'){
-    const modelKeys = [...new Set(PRODUCTS.filter(p=>groupOf(p)===browseState.group).map(modelKeyOf))].filter(Boolean);
-    el.innerHTML = `
-      <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
-      <p class="browse-heading">${bs[browseState.group]} — ${bs.pickModel}</p>
-      <div class="models-grid" id="modelsGrid"></div>`;
-    document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState = {level:'tiles', group:null, modelKey:null}; renderBrowse(); });
+  // ===== الصورتين الكبيرتين =====
+  const row = document.getElementById('tileRow');
+  ['tatreez','leather'].forEach(group=>{
+    const groupProducts = PRODUCTS.filter(p=>groupOf(p)===group);
+    const seenModels = new Set();
+    const imgs = [];
+    for(const p of groupProducts){
+      const mk = modelKeyOf(p);
+      if(mk && !seenModels.has(mk)){ seenModels.add(mk); imgs.push(p.img); if(imgs.length>=5) break; }
+    }
+    const tile = document.createElement('div');
+    tile.className = 'browse-tile' + (browseGroup===group ? ' active' : '') + (imgs.length===0 ? ' empty' : '');
+    if(imgs.length===0){
+      tile.innerHTML = `<span class="tile-label">${bs[group]}</span><span class="tile-soon">${bs.soon}</span>`;
+    } else {
+      tile.innerHTML = imgs.map((src,i)=>`<img src="${src}" class="${i===0?'show':''}">`).join('') + `<span class="tile-label">${bs[group]}</span>`;
+      if(imgs.length>1){
+        let idx = 0;
+        const imgEls = tile.querySelectorAll('img');
+        const timer = setInterval(()=>{
+          imgEls[idx].classList.remove('show');
+          idx = (idx+1) % imgEls.length;
+          imgEls[idx].classList.add('show');
+        }, 2600);
+        tileTimers.push(timer);
+      }
+    }
+    tile.addEventListener('click', ()=>{ browseGroup = group; browseModel = null; renderBrowse(); });
+    row.appendChild(tile);
+  });
+
+  // ===== شبكة الموديلات أو نقشات موديل محدد =====
+  const body = document.getElementById('browseBody');
+
+  if(browseModel === null){
+    const modelKeys = [...new Set(PRODUCTS.filter(p=>groupOf(p)===browseGroup).map(modelKeyOf))].filter(Boolean);
+    if(modelKeys.length === 0){
+      body.innerHTML = `<p class="browse-empty">${bs.soon}</p>`;
+      return;
+    }
+    body.innerHTML = `<p class="browse-heading">${bs[browseGroup]}</p><div class="models-grid" id="modelsGrid"></div>`;
     const grid = document.getElementById('modelsGrid');
     modelKeys.forEach(mk=>{
-      const modelImgs = PRODUCTS.filter(p=> modelKeyOf(p)===mk && groupOf(p)===browseState.group).map(p=>p.img).slice(0,3);
+      const modelImgs = PRODUCTS.filter(p=> modelKeyOf(p)===mk && groupOf(p)===browseGroup).map(p=>p.img).slice(0,3);
       const info = MODEL_INFO[mk] || {ar:mk, en:mk};
       const card = document.createElement('div');
       card.className = 'model-card';
@@ -1090,23 +1122,20 @@ function renderBrowse(){
         }, 2600);
         tileTimers.push(timer);
       }
-      card.addEventListener('click', ()=>{ browseState.level='variants'; browseState.modelKey=mk; renderBrowse(); });
+      card.addEventListener('click', ()=>{ browseModel = mk; renderBrowse(); window.scrollTo({top: el.offsetTop - 70, behavior:'smooth'}); });
       grid.appendChild(card);
     });
     return;
   }
 
-  if(browseState.level === 'variants'){
-    const items = PRODUCTS.filter(p=> modelKeyOf(p)===browseState.modelKey && groupOf(p)===browseState.group);
-    const info = MODEL_INFO[browseState.modelKey] || {ar:browseState.modelKey, en:browseState.modelKey};
-    el.innerHTML = `
-      <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
-      <p class="browse-heading">${info[lang]} — ${bs.allTag}</p>
-      <div class="grid" id="variantsGrid"></div>`;
-    document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseState.level='models'; browseState.modelKey=null; renderBrowse(); });
-    renderVariantCards(items, document.getElementById('variantsGrid'));
-    return;
-  }
+  const items = PRODUCTS.filter(p=> modelKeyOf(p)===browseModel && groupOf(p)===browseGroup);
+  const info = MODEL_INFO[browseModel] || {ar:browseModel, en:browseModel};
+  body.innerHTML = `
+    <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
+    <p class="browse-heading">${info[lang]} — ${bs.allTag}</p>
+    <div class="grid" id="variantsGrid"></div>`;
+  document.getElementById('browseBackBtn').addEventListener('click', ()=>{ browseModel = null; renderBrowse(); });
+  renderVariantCards(items, document.getElementById('variantsGrid'));
 }
 
 function renderVariantCards(items, grid){
