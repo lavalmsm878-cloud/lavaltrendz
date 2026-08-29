@@ -52,7 +52,7 @@ header{
 }
 .brand{display:flex; align-items:center; gap:10px;}
 .lt-badge{
-  width:44px; height:44px; border-radius:50%;
+  width:36px; height:36px; border-radius:50%;
   border:1.5px solid var(--gold);
   display:flex; align-items:center; justify-content:center;
   background:var(--surface); flex:0 0 auto;
@@ -444,7 +444,6 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
       <button class="lang-toggle" id="langToggle">EN</button>
     </div>
   </div>
-  <div class="cats-row" id="catsRow"></div>
 </header>
 
 <div class="delivery-banner" id="deliveryBanner"></div>
@@ -461,7 +460,7 @@ footer p{font-size:12px; color:var(--ink-soft); margin:10px 0 0;}
 
 <div class="browse-wrap" id="browseWrap"></div>
 
-<main>
+<main id="searchResultsMain" style="display:none;">
   <p class="count-line" id="countLine"></p>
   <div class="grid" id="grid"></div>
 </main>
@@ -1241,6 +1240,7 @@ document.getElementById('favToggle').addEventListener('click', ()=>{
 
 function renderCats(){
   const row = document.getElementById('catsRow');
+  if(!row) return; // شريط التصنيفات القديم مو موجود بعد اليوم — القسم الجديد بديله
   row.innerHTML = CATEGORIES.map(c =>
     `<button class="cat-pill ${c.key===activeCategory?'active':''}" data-cat="${c.key}">${c[lang]}</button>`
   ).join('');
@@ -1406,6 +1406,7 @@ lightboxOverlay.addEventListener('click', (e)=>{ if(e.target===lightboxOverlay) 
 /* Search */
 document.getElementById('searchInput').addEventListener('input', (e)=>{
   searchTerm = e.target.value;
+  document.getElementById('searchResultsMain').style.display = searchTerm.trim() ? '' : 'none';
   renderGrid();
 });
 
