@@ -1042,6 +1042,18 @@ function modelKeyOf(p){
 }
 function groupOf(p){ return p.categoryKey==='handbag_plain' ? 'leather' : 'tatreez'; }
 
+/* اسم عرض الموديل: يجرب القائمة الثابتة أول (موديلات قديمة أسماؤها مركّبة)،
+   وإذا الموديل جديد ومش موجود فيها، يستنتج الاسم تلقائياً من الشيت
+   (بشيل الرقم من آخر اسم منتج) — يعني موديل جديد بالكامل ما بيحتاج تعديل كود إطلاقاً */
+function modelInfoOf(mk){
+  if(MODEL_INFO[mk]) return MODEL_INFO[mk];
+  const sample = PRODUCTS.find(p => modelKeyOf(p) === mk);
+  const stripNum = s => (s||'').replace(/\s*\d+\s*$/, '').trim();
+  const arName = sample ? (stripNum(sample.nameAr) || mk) : mk;
+  const enName = mk.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  return { ar: arName, en: enName };
+}
+
 let browseGroup = 'tatreez';   // أي مربع مفعّل حالياً (تطريز افتراضياً)
 let browseModel = null;        // null = عرض شبكة الموديلات، وإلا اسم الموديل المختار
 let tileTimers = [];
@@ -1106,7 +1118,7 @@ function renderBrowse(){
     const grid = document.getElementById('modelsGrid');
     modelKeys.forEach(mk=>{
       const modelImgs = PRODUCTS.filter(p=> modelKeyOf(p)===mk && groupOf(p)===browseGroup).map(p=>p.img).slice(0,3);
-      const info = MODEL_INFO[mk] || {ar:mk, en:mk};
+      const info = modelInfoOf(mk);
       const card = document.createElement('div');
       card.className = 'model-card';
       const imgsHtml = modelImgs.map((src,i)=>`<img src="${src}" loading="lazy" class="${i===0?'show':''}">`).join('');
@@ -1128,7 +1140,7 @@ function renderBrowse(){
   }
 
   const items = PRODUCTS.filter(p=> modelKeyOf(p)===browseModel && groupOf(p)===browseGroup);
-  const info = MODEL_INFO[browseModel] || {ar:browseModel, en:browseModel};
+  const info = modelInfoOf(browseModel);
   body.innerHTML = `
     <button class="browse-back" id="browseBackBtn">→ ${bs.back}</button>
     <p class="browse-heading">${info[lang]} — ${bs.allTag}</p>
